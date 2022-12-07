@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/feed.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header--flexed">
+        <div class="header-menu">
+          <div class="header-menu__item header-menu__item-active">
+            <div class="header-menu__item-content">
+              <img src="/resources/home.png" alt="" />
+              <h2>Главная</h2>
+            </div>
+          </div>
+          <div class="header-menu__item">
+            <div class="header-menu__item-content">
+              <img src="/resources/bell.png" alt="" />
+              <h2>Уведомления</h2>
+            </div>
+          </div>
+          <div class="header-menu__item">
+            <div class="header-menu__item-content">
+              <img src="/resources/message.png" alt="" />
+              <h2>Сообщения</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-avatar">
+          <img src="/resources/trump.png" alt="" class="header-avatar-img" />
+        </div>
+      </div>
+      <svg
+        width="21"
+        height="23"
+        viewBox="0 0 21 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20.7582 8.98026C20.4697 9.29889 20.0445 9.29889 19.9047 9.29889C19.6455 9.29889 19.3251 9.2542 18.866 9.15389C18.5054 9.0751 18.1948 8.99656 17.921 8.92737C17.3823 8.7911 16.993 8.69259 16.6265 8.69259C16.4199 8.69259 16.043 8.7858 15.6439 8.88455C15.0225 9.03829 14.2491 9.22955 13.5011 9.22955C12.7459 9.22955 11.951 9.16839 11.4501 9.1212C11.2838 9.77064 10.888 10.8416 9.98966 11.6082C8.76827 12.6503 7.86274 13.1152 7.82476 13.1344C7.5928 13.2522 7.31387 13.1905 7.14812 12.9845C6.98237 12.7787 6.97248 12.4818 7.12423 12.2646C7.12925 12.2572 7.73968 11.3585 7.71623 10.3485C7.70695 9.94676 7.69294 9.63195 7.67864 9.39218C6.91788 9.62571 5.62257 10.1478 4.95439 11.1305C3.9422 12.619 3.52696 14.9107 3.63818 15.6624C3.75398 16.4457 3.76784 16.4457 4.12473 16.4457C4.90234 16.4457 5.55561 16.4789 6.29142 16.896C6.9423 17.2649 7.30077 17.6685 7.33942 17.7133C7.48539 17.8822 7.52427 18.1238 7.43911 18.333C7.35395 18.5422 7.16018 18.6812 6.94215 18.6893C6.73183 18.6975 6.09541 18.7527 5.68639 18.9073C5.46918 18.9894 5.28208 19.0855 5.10112 19.1785C4.81163 19.3272 4.53818 19.4677 4.21918 19.507C4.11544 19.5198 4.00894 19.526 3.90812 19.524C3.79053 19.8085 3.5904 20.1476 3.2538 20.4166C2.99615 20.6226 2.734 20.7497 2.50271 20.8617C2.21869 20.9994 1.99429 21.1081 1.82202 21.3305C1.37053 21.9136 1.21901 22.5458 1.21758 22.5521C1.15856 22.8046 0.946299 22.9876 0.697034 22.9994C0.68842 22.9998 0.679732 23 0.671118 23C0.432114 23 0.217677 22.8431 0.139707 22.6056C0.104579 22.499 -0.191498 21.5217 0.202548 20.0913C0.343433 19.5799 0.56169 19.1372 0.772682 18.709C1.11602 18.0125 1.41255 17.4111 1.28814 16.674C0.703325 13.2099 0.743696 10.3933 1.40805 8.30274C2.44107 5.05134 4.94181 3.23977 5.43263 2.90975C5.67612 2.74587 5.89528 2.60172 6.07998 2.48191C5.90869 2.3398 5.69095 2.1905 5.4321 2.07592C4.84294 1.81508 4.59532 1.74379 4.52672 1.72679C4.5223 1.72694 4.51803 1.72694 4.51376 1.72694C4.26921 1.72702 4.08121 1.55885 4.00969 1.31049C3.93539 1.05262 4.07343 0.775798 4.29595 0.638906C4.33827 0.612776 5.35039 0 6.68427 0C6.95953 0 7.23298 0.0262863 7.497 0.078157C8.31962 0.239853 8.90099 0.481422 9.46319 0.714957C10.0121 0.943032 10.5307 1.15847 11.3048 1.32828C11.6809 1.4108 12.0272 1.47445 12.3621 1.53607C13.5143 1.74792 14.5093 1.93091 15.997 2.72208C17.9387 3.75481 19.0305 4.88473 19.0714 5.90351C19.0801 6.11824 19.0756 6.31012 19.0579 6.47876C19.2396 6.57338 19.4604 6.69295 19.6834 6.82509C20.5914 7.3629 20.9722 7.7657 20.9976 8.21522C21.0152 8.52801 20.9347 8.78533 20.7582 8.98026Z"
+          fill="#0057FF"
+        />
+      </svg>
+    </header>
+    <main>
+      <div class="container">
+        <div class="main__box">
+          <section class="last-messages">
+            <section class="new-post">
+              <form action="">
+                <input
+                  type="text"
+                  class="new-post-input card-shadow"
+                  placeholder="Что нового, Donald?"
+                />
+              </form>
+            </section>
+            <div class="last-messages__content card-shadow">
+              <div class="last-messages__box">
+                <img
+                  class="last-messages__box-avatar"
+                  src="/resources/musk.png"
+                  alt="Avatar"
+                />
+                <div class="last-messages__box-right">
+                  <div class="last-messages__box-title">
+                    <div class="last-messages__box-title_left">
+                      <h3>Elon Musk</h3>
+                      <p class="last-messages__box-nickname">@elonmusk</p>
+                    </div>
+                    <p class="last-messages__box-time">28 минут назад</p>
+                  </div>
+                  <div class="last-messages__box-message">
+                    <p>Has anyone seen web3? I can't find it.</p>
+                  </div>
+                  <div class="last-messages__box-statistics">
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/reply.png" alt="Reply" />
+                      <p class="last-messages__box-statistic-title">21</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/like.png" alt="Like" />
+                      <p class="last-messages__box-statistic-title">23</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/forward.png" alt="Forward" />
+                      <p class="last-messages__box-statistic-title">9</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="last-messages__box">
+                <img
+                  class="last-messages__box-avatar"
+                  src="/resources/roizman.png"
+                  alt="Avatar"
+                />
+                <div class="last-messages__box-right">
+                  <div class="last-messages__box-title">
+                    <div class="last-messages__box-title_left">
+                      <h3>Евгений Ройзман</h3>
+                      <p class="last-messages__box-nickname">@roizmangbn</p>
+                    </div>
+                    <p class="last-messages__box-time">2 часа назад</p>
+                  </div>
+                  <div class="last-messages__box-message">
+                    <p>
+                      Пробежал десятку по набережной. Снег идет, тихо,
+                      светло.<br />
+                      Все будет хорошо.
+                    </p>
+                  </div>
+                  <div class="last-messages__box-statistics">
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/reply.png" alt="Reply" />
+                      <p class="last-messages__box-statistic-title">21</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/like.png" alt="Like" />
+                      <p class="last-messages__box-statistic-title">23</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/forward.png" alt="Forward" />
+                      <p class="last-messages__box-statistic-title">9</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="last-messages__box">
+                <img
+                  class="last-messages__box-avatar"
+                  src="/resources/sport.png"
+                  alt="Avatar"
+                />
+                <div class="last-messages__box-right">
+                  <div class="last-messages__box-title">
+                    <div class="last-messages__box-title_left">
+                      <h3>Sports.ru</h3>
+                      <p class="last-messages__box-nickname">@sportsru</p>
+                    </div>
+                    <p class="last-messages__box-time">12 часов назад</p>
+                  </div>
+                  <div class="last-messages__box-message">
+                    <p>
+                      Кстати, год назад сборная была на 39-м месте. Прорыв! А
+                      лидер рейтинга вновь не поменялся.
+                    </p>
+                    <img src="/resources/karpin.png" alt="attach" />
+                  </div>
+                  <div class="last-messages__box-statistics">
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/reply.png" alt="Reply" />
+                      <p class="last-messages__box-statistic-title">21</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/like.png" alt="Like" />
+                      <p class="last-messages__box-statistic-title">23</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/forward.png" alt="Forward" />
+                      <p class="last-messages__box-statistic-title">9</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="last-messages__box">
+                <img
+                  class="last-messages__box-avatar"
+                  src="/resources/man.png"
+                  alt="Avatar"
+                />
+                <div class="last-messages__box-right">
+                  <div class="last-messages__box-title">
+                    <div class="last-messages__box-title_left">
+                      <h3>Михаил</h3>
+                      <p class="last-messages__box-nickname">@msvetov</p>
+                    </div>
+                    <p class="last-messages__box-time">1 день назад</p>
+                  </div>
+                  <div class="last-messages__box-message">
+                    <p>
+                      В столице Австрии уже который месяц продолжаются митинги
+                      против введения электронных паспортов. В современной
+                      истории ещё не было таких массовых, продолжительных и
+                      глобальных протестов. Но журналистам не интересно
+                      рассказывать о том, что на самом деле волнует людей.
+                    </p>
+                  </div>
+                  <div class="last-messages__box-statistics">
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/reply.png" alt="Reply" />
+                      <p class="last-messages__box-statistic-title">21</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/like.png" alt="Like" />
+                      <p class="last-messages__box-statistic-title">23</p>
+                    </div>
+                    <div class="last-messages__box-statistic">
+                      <img src="/resources/forward.png" alt="Forward" />
+                      <p class="last-messages__box-statistic-title">9</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <aside>
+            <div class="profile-info aside__card card-shadow">
+              <div class="profile-info__header">
+                <img src="/resources/trump.png" alt="avatar" />
+                <div class="profile-info__header-title">
+                  <h2>Donald</h2>
+                  <p>@donaldjtrump</p>
+                </div>
+              </div>
+              <div class="profile-info__statistics">
+                <div class="profile-info__statistics-box">
+                  <h2>45К</h2>
+                  <p>сообщений</p>
+                </div>
+                <div class="profile-info__statistics-box">
+                  <h2>28</h2>
+                  <p>Читаемых</p>
+                </div>
+                <div class="profile-info__statistics-box">
+                  <h2>118</h2>
+                  <p>Читателей</p>
+                </div>
+              </div>
+            </div>
+            <div class="actual aside__card card-shadow">
+              <h3>Актуальные темы</h3>
+              <div class="actual__themes">
+                <div class="actual__theme">
+                  <h4>Новый Год 2022</h4>
+                  <div class="actual__theme-description">
+                    <div class="actual__theme-destination">
+                      <img src="/resources/mark.png" alt="mark" />
+                      <h5>Россия</h5>
+                    </div>
+                    <p>2 941 сообщений</p>
+                  </div>
+                </div>
+                <div class="actual__theme">
+                  <h4>BTS</h4>
+                  <div class="actual__theme-description">
+                    <div class="actual__theme-destination">
+                      <img src="/resources/mark.png" alt="mark" />
+                      <h5>Мир</h5>
+                    </div>
+                    <p>29 718 сообщений</p>
+                  </div>
+                </div>
+                <div class="actual__theme">
+                  <h4>Украина</h4>
+                  <div class="actual__theme-description">
+                    <div class="actual__theme-destination">
+                      <img src="/resources/mark.png" alt="mark" />
+                      <h5>Россия</h5>
+                    </div>
+                    <p>958 186 сообщений</p>
+                  </div>
+                </div>
+                <div class="actual__theme">
+                  <h4>Дудь</h4>
+                  <div class="actual__theme-description">
+                    <div class="actual__theme-destination">
+                      <img src="/resources/mark.png" alt="mark" />
+                      <h5>Россия</h5>
+                    </div>
+                    <p>4 185 сообщений</p>
+                  </div>
+                </div>
+                <div class="actual__theme">
+                  <h4>ЛГБТ</h4>
+                  <div class="actual__theme-description">
+                    <div class="actual__theme-destination">
+                      <img src="/resources/mark.png" alt="mark" />
+                      <h5>Москва</h5>
+                    </div>
+                    <p>482 сообщения</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bloggers aside__card card-shadow">
+              <h3>Рекомендации для вас</h3>
+              <div class="bloggers__content">
+                <div class="blogger">
+                  <div class="blogger__left">
+                    <img src="/resources/blogger1.png" alt="avatar" />
+                    <div class="blogger__title">
+                      <h4>Хабр Научпоп</h4>
+                      <p>@habr_popsci</p>
+                    </div>
+                  </div>
+                  <div class="btn">Читать</div>
+                </div>
+                <div class="blogger">
+                  <div class="blogger__left">
+                    <img src="/resources/blogger2.png" alt="avatar" />
+                    <div class="blogger__title">
+                      <h4>Матч ТВ</h4>
+                      <p>@MatchTV</p>
+                    </div>
+                  </div>
+                  <div class="btn">Читать</div>
+                </div>
+                <div class="blogger">
+                  <div class="blogger__left">
+                    <img src="/resources/blogger3.png" alt="avatar" />
+                    <div class="blogger__title">
+                      <h4>Популярная меха...</h4>
+                      <p>@PopMechanica</p>
+                    </div>
+                  </div>
+                  <div class="btn">Читать</div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer-box active">
+        <a href="/"
+          ><img class="footer-icon" src="/resources/home.png" alt=""
+        /></a>
+      </div>
+      <div class="footer-box">
+        <a href="/"
+          ><img class="footer-icon" src="/resources/bell.png" alt=""
+        /></a>
+      </div>
+      <div class="footer-box">
+        <a href="/"
+          ><img class="footer-icon" src="/resources/message.png" alt=""
+        /></a>
+      </div>
+      <div class="footer-box">
+        <a href="/">
+          <img class="footer-avatar" src="/resources/trump.png" alt="" />
+        </a>
+      </div>
+    </footer>
+    <button class="new-message">
+      <img src="/resources/write.png" alt="" />
+    </button>
+  </body>
+</html>

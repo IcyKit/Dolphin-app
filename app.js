@@ -8,6 +8,8 @@ const port = process.env.PORT || 3001;
 
 const jsonParser = bodyParser.json();
 
+app.use(express.static("public"));
+
 // Получение постов
 app.get("/posts", async (req, res) => {
   let data = await getPosts();
@@ -36,6 +38,10 @@ app.post("/posts/:id", jsonParser, async (req, res) => {
   const { content } = await req.body;
   await updatePost(postId, content);
   res.send("Пост обновлен!");
+});
+
+app.get("/", async (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

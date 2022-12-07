@@ -1,0 +1,78 @@
+{
+  "staticInfo": {
+    "usersRegistered": 481,
+    "messagesSent": "140K",
+    "messagesToday": 389
+  },
+  "lastMessages": [
+    {
+      "id": 1,
+      "name": "Евгений Ройзман",
+      "nickname": "@roizmangbn",
+      "avatar": "ссылка на аватарку",
+      "date": "2022-11-14T19:23:00.511Z",
+      "content": "Пробежал десятку по набережной. Снег идет, тихо, светло. Все будет хорошо",
+      "replies": 21,
+      "likes": 23,
+      "reposts": 9
+    },
+    {
+      "id": 2,
+      "name": "Elom Musk",
+      "nickname": "@elonmusk",
+      "avatar": "ссылка на аватарку",
+      "date": "2022-11-23T15:44:10.511Z",
+      "content": "Has anyone seen web3? I can't find it.",
+      "replies": 23,
+      "likes": 53,
+      "reposts": 4
+    },
+    {
+      "id": 3,
+      "name": "Sports.ru",
+      "nickname": "@sportsru",
+      "avatar": "ссылка на аватарку",
+      "date": "2022-11-14T13:25:30.511Z",
+      "content": "Кстати, год назад сборная была на 39-м месте. Прорыв! А лидер рейтинга вновь не поменялся.",
+      "replies": 12,
+      "likes": 80,
+      "reposts": 1,
+      "attachment": "/resources/karpin.png"
+    },
+    {
+      "id": 4,
+      "name": "Михаил",
+      "nickname": "@msvetov",
+      "avatar": "ссылка на аватарку",
+      "date": "2022-11-13T05:10:08.511Z",
+      "content": "В столице Австрии уже который месяц продолжаются митинги против введения электронных паспортов. В современной истории ещё не было таких массовых, продолжительных и глобальных протестов. Но журналистам не интересно рассказывать о том, что на самом деле волнует людей.",
+      "replies": 57,
+      "likes": 99,
+      "reposts": 45
+    }
+  ],
+  "topics": [
+    { "topic": "Новый год 2022", "location": "Россия", "messages": 2941 },
+    { "topic": "BTS", "location": "Мир", "messages": 29718 },
+    { "topic": "Украина", "location": "Россия", "messages": 958186 },
+    { "topic": "Дудь", "location": "Россия", "messages": 4185 },
+    { "topic": "ЛГБТ", "location": "Москва", "messages": 482 }
+  ],
+  "blogs": [
+    {
+      "name": "Хабр Научпоп",
+      "nickname": "@habr_popsci",
+      "avatar": "/resources/blogger1.png"
+    },
+    {
+      "name": "Матч ТВ",
+      "nickname": "@MatchTV",
+      "avatar": "/resources/blogger2.png"
+    },
+    {
+      "name": "Популярная механика",
+      "nickname": "@PopMechanica",
+      "avatar": "/resources/blogger3.png"
+    }
+  ]
+}

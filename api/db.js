@@ -15,7 +15,9 @@ const makeNewClient = () => {
 const getPosts = async () => {
   const client = makeNewClient();
   client.connect();
-  const res = await client.query("SELECT * FROM posts");
+  const res = await client.query(
+    "SELECT name, nickname, content, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC"
+  );
   client.end();
   return res.rows;
 };
