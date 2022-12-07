@@ -16,8 +16,8 @@ app.get("/posts", async (req, res) => {
 
 // Создание поста
 app.post("/posts", jsonParser, async (req, res) => {
-  const { user_id, content } = req.body;
-  createPost(user_id, content);
+  const { user_id, content } = await req.body;
+  await createPost(user_id, content);
   res.send("Пост добавлен");
 });
 
@@ -25,7 +25,7 @@ app.post("/posts", jsonParser, async (req, res) => {
 app.delete("/posts/:id", jsonParser, async (req, res) => {
   const urlArr = url.parse(req.url, true).path.split("/");
   const postId = urlArr.at(-1);
-  deletePost(postId);
+  await deletePost(postId);
   res.send("Пост удален!");
 });
 
@@ -33,8 +33,8 @@ app.delete("/posts/:id", jsonParser, async (req, res) => {
 app.post("/posts/:id", jsonParser, async (req, res) => {
   const urlArr = url.parse(req.url, true).path.split("/");
   const postId = urlArr.at(-1);
-  const { content } = req.body;
-  updatePost(postId, content);
+  const { content } = await req.body;
+  await updatePost(postId, content);
   res.send("Пост обновлен!");
 });
 
