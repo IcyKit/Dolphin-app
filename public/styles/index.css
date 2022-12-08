@@ -21,6 +21,13 @@ aside {
   transition: transform 1s;
 }
 
+.isUser {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -288,7 +295,7 @@ main h2 {
 
 .input-box {
   position: relative;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .input-box input {

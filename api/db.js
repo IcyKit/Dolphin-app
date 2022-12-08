@@ -16,7 +16,7 @@ const getPosts = async () => {
   const client = makeNewClient();
   client.connect();
   const res = await client.query(
-    "SELECT name, nickname, content, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC"
+    "SELECT name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC"
   );
   client.end();
   return res.rows;
@@ -47,9 +47,29 @@ const updatePost = async (post_id, content) => {
   client.end();
 };
 
+const createUser = async (nickname, password) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `INSERT INTO users (nickname, password, name) VALUES ('${nickname}', '${password}', '${nickname}')`;
+  await client.query(queryString);
+  client.end();
+};
+
+const checkUser = async (nickname, password) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE nickname = '${nickname}')`;
+  const result = await client.query(queryString);
+  const isUser = result.rows[0].exists;
+  client.end();
+  return isUser;
+};
+
 module.exports = {
   getPosts,
   createPost,
   deletePost,
   updatePost,
+  checkUser,
+  createUser,
 };
