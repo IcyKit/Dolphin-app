@@ -1,0 +1,451 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+aside {
+  display: none;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  padding-bottom: 60px;
+}
+
+.btn {
+  width: 100%;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border: 1px solid #0057ff;
+  background: none;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #0057ff;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+}
+
+.btn-active {
+  background-color: #0057ff;
+  color: #fff;
+}
+
+.container {
+  padding: 36px 0;
+}
+
+.avatar-rounded {
+  border-radius: 50%;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0057ff;
+  height: 45px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+}
+
+header path {
+  fill: #fff;
+}
+
+.header-avatar {
+  display: none;
+}
+
+.header-menu {
+  display: none;
+}
+
+main > .container {
+  padding: 0;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin: 15px 0;
+  background-color: #e9e9e9;
+}
+
+.settings-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-side {
+  order: 2;
+}
+
+.right-side {
+  order: 1;
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
+  padding: 15px 15px 15px 0;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 15px 30px 15px;
+}
+
+.settings input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  height: 52px;
+  padding: 20px 15px 7px 15px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #555555;
+  font-family: "Lato", sans-serif;
+}
+
+.settings label {
+  font-size: 9px;
+  line-height: 11px;
+  color: #b1b1b1;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+}
+
+.settings textarea {
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  width: 100%;
+  height: 80px;
+  padding: 20px 15px 7px 15px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #555555;
+  font-family: "Lato", sans-serif;
+  resize: none;
+}
+
+.settings select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  height: 52px;
+  padding: 20px 15px 7px 10px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #555555;
+  font-family: "Lato", sans-serif;
+}
+
+.error-input {
+  margin-bottom: 25px;
+}
+
+.error-input input {
+  background: #ffdeec;
+  border: 1px solid #e40060;
+  margin-bottom: 5px;
+}
+
+.error-input p {
+  font-size: 9px;
+  line-height: 11px;
+  color: #e40060;
+  padding-left: 15px;
+}
+
+.settings > .btn {
+  margin: 0;
+}
+
+.right-side h2 {
+  padding-left: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 32px;
+  color: #1d1e22;
+}
+
+.side-links__box {
+  width: 100%;
+  padding: 15px;
+}
+
+.side-links__box-active {
+  border-left: 3px solid #0057ff;
+  padding: 15px 15px 15px 12px;
+}
+
+.side-links__box-active a {
+  color: #0057ff !important;
+  font-weight: 900;
+}
+
+.side-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.side-links a {
+  font-size: 16px;
+  line-height: 20px;
+  color: #1d1e22;
+  text-decoration: none;
+}
+
+.birthday {
+  display: flex;
+  justify-content: space-between;
+}
+
+.birthday > .input-box {
+  margin-bottom: 30px;
+}
+
+.birthday-left {
+  width: 48%;
+}
+
+.birthday-right {
+  width: 48%;
+}
+
+.main__box h1 {
+  font-size: 24px;
+  line-height: 29px;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+.nick-and-photo {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px auto;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer > .active {
+  border-bottom: 3px solid #0057ff;
+}
+
+.footer-box > a {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.footer-icon {
+  width: 50%;
+  height: 50%;
+}
+
+.footer-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 992px) {
+  body {
+    background-color: #f4f5f7;
+  }
+
+  .container {
+    max-width: 960px;
+  }
+
+  .btn {
+    width: 180px;
+  }
+
+  .card-shadow {
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  header {
+    margin-bottom: 30px;
+    background-color: #fff;
+    height: 100%;
+  }
+
+  header svg {
+    position: absolute;
+  }
+
+  header path {
+    fill: #0057ff;
+  }
+
+  .header--flexed {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header-avatar {
+    display: block;
+    padding: 8px 16px 8px 0;
+  }
+
+  .header-avatar-img {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  .header-menu {
+    display: flex;
+  }
+
+  .header-menu__item-content {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: #b1b1b1;
+    padding: 22px 20px;
+  }
+
+  header h2 {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .header-menu__item {
+    margin-right: 20px;
+    height: 100%;
+  }
+
+  .header-menu__item img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  .header-menu__item-active {
+    border-bottom: 3px solid #0057ff;
+  }
+
+  .header-menu__item-active h2 {
+    color: #0057ff;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .main__box h1 {
+    font-size: 36px;
+    line-height: 43px;
+    padding: 0;
+  }
+
+  .settings-main {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .left-side {
+    order: 1;
+  }
+
+  .right-side {
+    order: 2;
+  }
+
+  .settings {
+    background-color: #fff;
+    width: 630px;
+    border-radius: 10px;
+    padding: 25px 15px 30px 15px;
+  }
+
+  .settings input {
+    width: 100%;
+  }
+
+  .input-box {
+    margin-bottom: 25px;
+  }
+
+  .error-input {
+    margin-bottom: 10px;
+  }
+
+  .nick-and-photo {
+    flex-direction: row;
+  }
+
+  .nick {
+    order: 1;
+    width: 400px;
+  }
+
+  .photo {
+    order: 2;
+    width: 128px;
+    height: 128px;
+  }
+
+  main > .container {
+    padding: 0;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  footer {
+    display: none;
+  }
+
+  aside {
+    display: block;
+  }
+
+  .aside__card {
+    background-color: #fff;
+    min-width: 312px;
+    padding: 8px 15px 7px 0;
+    border-radius: 10px;
+    height: 100%;
+  }
+}
