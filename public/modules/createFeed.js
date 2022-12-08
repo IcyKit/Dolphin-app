@@ -55,7 +55,8 @@ const createFeed = async () => {
                      <div class="last-messages__box-title">
                        <div class="last-messages__box-title_left">
                          <h3>${item.name}</h3>
-                         <p class="last-messages__box-nickname">@${item.nickname}</p>
+                         <p class="last-messages__box-nickname">@${item.nickname
+        }</p>
                        </div>
                        <p class="last-messages__box-time">${timeOfMessage}</p>
                      </div>
@@ -63,19 +64,23 @@ const createFeed = async () => {
                        <p>
                          ${item.content}
                        </p>
+                      ${item.attachment ? `<img src=${item.attachment} />` : ""}
                      </div>
                      <div class="last-messages__box-statistics">
                        <div class="last-messages__box-statistic">
                          <img src="/resources/reply.png" alt="Reply" />
-                         <p class="last-messages__box-statistic-title">${item.replies}</p>
+                         <p class="last-messages__box-statistic-title">${item.replies
+        }</p>
                        </div>
                        <div class="last-messages__box-statistic">
                          <img src="/resources/like.png" alt="Like" />
-                         <p class="last-messages__box-statistic-title">${item.likes}</p>
+                         <p class="last-messages__box-statistic-title">${item.likes
+        }</p>
                        </div>
                        <div class="last-messages__box-statistic">
                          <img src="/resources/forward.png" alt="Forward" />
-                         <p class="last-messages__box-statistic-title">${item.reposts}</p>
+                         <p class="last-messages__box-statistic-title">${item.reposts
+        }</p>
                        </div>
                      </div>
                    </div>

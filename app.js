@@ -1,7 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const url = require("url");
-const { getPosts, createPost, deletePost, updatePost } = require("./api/db.js");
+const {
+  getPosts,
+  createPost,
+  deletePost,
+  updatePost,
+  checkUser,
+  createUser,
+} = require("./api/db.js");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -40,6 +47,18 @@ app.post("/posts/:id", jsonParser, async (req, res) => {
   res.send("Пост обновлен!");
 });
 
+app.post("/createUser", jsonParser, async (req, res) => {
+  const { nickname, password, name } = await req.body;
+  const result = await checkUser(nickname, password);
+  if (result) {
+    res.status(400).send("Такой пользователь уже существует");
+  } else {
+    await createUser(nickname, password, name);
+    res.status(200).send("Пользователь успешно создан");
+  }
+});
+
+// Главная страница
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
