@@ -1,15 +1,14 @@
-# README
+# Dolphin Project
 
-This is the [Express](https://expressjs.com) [Hello world](https://expressjs.com/en/starter/hello-world.html) example on [Render](https://render.com).
+This is my personal project. Dolphin is a modern social network that gives complete freedom of speech
 
-The app in this repo is deployed at [https://express.onrender.com](https://express.onrender.com).
+## Website
+
+You can go to the project by [this link](https://dolphin-app.onrender.com)
 
 ## Deployment
 
-See https://render.com/docs/deploy-node-express-app or follow the steps below:
-
 Create a new web service with the following values:
-  * Build Command: `yarn`
-  * Start Command: `node app.js`
 
-That's it! Your web service will be live on your Render URL as soon as the build finishes.
+- Build Command: `npm i`
+- Start Command: `node app.js`
