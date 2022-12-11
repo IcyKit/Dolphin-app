@@ -8,6 +8,7 @@ const {
   updatePost,
   checkUser,
   createUser,
+  loginUser,
 } = require("./api/db.js");
 
 const app = express();
@@ -48,13 +49,23 @@ app.post("/posts/:id", jsonParser, async (req, res) => {
 });
 
 app.post("/createUser", jsonParser, async (req, res) => {
-  const { nickname, password, name } = await req.body;
-  const result = await checkUser(nickname, password);
+  const { nickname, password, email } = await req.body;
+  const result = await checkUser(nickname);
   if (result) {
     res.status(400).send("Такой пользователь уже существует");
   } else {
-    await createUser(nickname, password, name);
+    await createUser(nickname, password, email);
     res.status(200).send("Пользователь успешно создан");
+  }
+});
+
+app.post("/login", jsonParser, async (req, res) => {
+  const { nickname, password } = await req.body;
+  const result = await loginUser(nickname, password);
+  if (result) {
+    res.status(200).send("Пользователь успешно авторизирован");
+  } else {
+    res.status(400).send("Пользователь не найден");
   }
 });
 

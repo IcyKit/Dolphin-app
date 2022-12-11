@@ -4,6 +4,7 @@ import validateRegisterModal from "./modules/validateRegisterModal.js";
 import createFeed from "./modules/createFeed.js";
 import createActual from "./modules/createActual.js";
 import createBlogs from "./modules/createBlogs.js";
+import validateAuthModal from "./modules/validateAuthModal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const registrationPopup = document.querySelector("#register_popup");
@@ -59,11 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Форма авторизации
-  let authNicknameOrEmailForm = document.querySelector("#auth_nickname_email");
-  let authPasswordForm = document.querySelector("#auth_password");
   let submitAuthBtn = document.querySelector("#submit_auth_btn");
   submitAuthBtn.addEventListener("click", () => {
-    alert(`${authNicknameOrEmailForm.value} ${authPasswordForm.value}`);
+    validateAuthModal(authPopup);
   });
 
   // Статистика для синего экрана в начале

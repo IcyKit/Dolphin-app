@@ -2,7 +2,6 @@ const { Client } = require("pg");
 
 const connectionString =
   "postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development";
-
 const makeNewClient = () => {
   return new Client({
     connectionString,
@@ -47,18 +46,29 @@ const updatePost = async (post_id, content) => {
   client.end();
 };
 
-const createUser = async (nickname, password) => {
+const createUser = async (nickname, password, email) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `INSERT INTO users (nickname, password, name) VALUES ('${nickname}', '${password}', '${nickname}')`;
+  const queryString = `INSERT INTO users (nickname, password, name, email) VALUES ('${nickname}', '${password}', '${nickname}', '${email}')`;
   await client.query(queryString);
   client.end();
 };
 
-const checkUser = async (nickname, password) => {
+const checkUser = async (nickname) => {
   const client = makeNewClient();
   client.connect();
   const queryString = `SELECT EXISTS (SELECT * FROM users WHERE nickname = '${nickname}')`;
+  const result = await client.query(queryString);
+  const isUser = result.rows[0].exists;
+  client.end();
+  return isUser;
+};
+
+const loginUser = async (nicknameOrPassword, password) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE (nickname = '${nicknameOrPassword}' OR email = '${nicknameOrPassword}') AND password = '${password}')`;
+  console.log(queryString);
   const result = await client.query(queryString);
   const isUser = result.rows[0].exists;
   client.end();
@@ -72,4 +82,5 @@ module.exports = {
   updatePost,
   checkUser,
   createUser,
+  loginUser,
 };

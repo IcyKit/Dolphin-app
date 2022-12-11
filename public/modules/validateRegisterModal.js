@@ -68,10 +68,11 @@ const validateRegisterModal = async (registrationPopup) => {
     }
   };
 
-  const postData = async (nickname, password) => {
+  const postData = async (nickname, password, email) => {
     const data = {
       nickname,
       password,
+      email,
     };
     const req = await fetch("/createUser", {
       method: "POST",
@@ -80,21 +81,20 @@ const validateRegisterModal = async (registrationPopup) => {
       },
       body: JSON.stringify(data),
     });
-    const response = req;
-    console.log(response);
-    return response;
+    return req;
   };
 
   removeAllParagraphs();
   validatePassword();
   validateAllInputValue();
   validateEmail();
-  const allInputs = document.querySelectorAll("input");
-  const allInputBoxes = document.querySelectorAll(".input-box");
+  const allInputs = registrationPopup.querySelectorAll("input");
+  const allInputBoxes = registrationPopup.querySelectorAll(".input-box");
   if (!validationError) {
     const result = await postData(
       registerNicknameForm.value,
-      registerPasswordForm.value
+      registerPasswordForm.value,
+      registerEmailForm.value
     );
     if (result.status === 400) {
       const el = document.createElement("p");
@@ -111,7 +111,6 @@ const validateRegisterModal = async (registrationPopup) => {
     allInputBoxes.forEach((box) => {
       box.classList.remove("error-input");
     });
-  } else {
   }
 };
 
