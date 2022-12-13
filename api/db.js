@@ -26,7 +26,6 @@ const createPost = async (user_id, content) => {
   client.connect();
   const queryString = `INSERT INTO posts (user_id, content) VALUES (${user_id}, '${content}')`;
   await client.query(queryString);
-  // console.log(user_id, content);
   client.end();
 };
 
@@ -64,15 +63,34 @@ const checkUser = async (nickname) => {
   return isUser;
 };
 
-const loginUser = async (nicknameOrPassword, password) => {
+const checkEmail = async (email) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE (nickname = '${nicknameOrPassword}' OR email = '${nicknameOrPassword}') AND password = '${password}')`;
-  console.log(queryString);
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE email = '${email}')`;
+  const result = await client.query(queryString);
+  const isEmail = result.rows[0].exists;
+  client.end();
+  return isEmail;
+};
+
+const loginUser = async (nicknameOrEmail, password) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE (nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}') AND password = '${password}')`;
   const result = await client.query(queryString);
   const isUser = result.rows[0].exists;
   client.end();
   return isUser;
+};
+
+const getHashedPassword = async (nicknameOrEmail) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT nickname, email, password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
+  const result = await client.query(queryString);
+  const userData = result.rows[0].password;
+  client.end();
+  return userData;
 };
 
 module.exports = {
@@ -81,6 +99,8 @@ module.exports = {
   deletePost,
   updatePost,
   checkUser,
+  checkEmail,
   createUser,
   loginUser,
+  getHashedPassword,
 };

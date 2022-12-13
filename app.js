@@ -1,21 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const url = require("url");
+const bcrypt = require("bcrypt");
+
 const {
   getPosts,
   createPost,
   deletePost,
   updatePost,
   checkUser,
+  checkEmail,
   createUser,
   loginUser,
+  getHashedPassword,
 } = require("./api/db.js");
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 const jsonParser = bodyParser.json();
-
 app.use(express.static("public"));
 
 // Получение постов
@@ -26,7 +29,7 @@ app.get("/posts", async (req, res) => {
 
 // Создание поста
 app.post("/posts", jsonParser, async (req, res) => {
-  const { user_id, content } = await req.body;
+  const { user_id, content } = req.body;
   await createPost(user_id, content);
   res.send("Пост добавлен");
 });
@@ -49,29 +52,50 @@ app.post("/posts/:id", jsonParser, async (req, res) => {
 });
 
 app.post("/createUser", jsonParser, async (req, res) => {
-  const { nickname, password, email } = await req.body;
-  const result = await checkUser(nickname);
-  if (result) {
-    res.status(400).send("Такой пользователь уже существует");
+  const { nickname, password, email } = req.body;
+  const resultNickname = await checkUser(nickname);
+  const resultEmail = await checkEmail(email);
+  const hashedPassword = await bcrypt.hash(password, 10);
+  if (resultNickname) {
+    res
+      .status(400)
+      .json({ message: "Имя пользователя занято", class: "auth-error" });
+  } else if (resultEmail) {
+    res.status(400).json({
+      message: "На эту почту уже зарегистрирован аккаунт",
+      class: "auth-error",
+    });
   } else {
-    await createUser(nickname, password, email);
-    res.status(200).send("Пользователь успешно создан");
+    await createUser(nickname, hashedPassword, email);
+    res
+      .status(200)
+      .json({ message: "Пользователь успешно создан", class: "auth-success" });
   }
 });
 
 app.post("/login", jsonParser, async (req, res) => {
-  const { nickname, password } = await req.body;
-  const result = await loginUser(nickname, password);
-  if (result) {
-    res.status(200).send("Пользователь успешно авторизирован");
-  } else {
-    res.status(400).send("Пользователь не найден");
+  try {
+    const { nickname, password } = req.body;
+    const userPassword = await getHashedPassword(nickname);
+    const match = await bcrypt.compare(password, userPassword);
+    if (match) {
+      const result = await loginUser(nickname, userPassword);
+      if (result) {
+        res.status(200).json({
+          message: "Пользователь успешно авторизован",
+          class: "auth-success",
+        });
+      }
+    } else {
+      res.status(400).json({ message: "Неверный пароль", class: "auth-error" });
+    }
+  } catch (e) {
+    res.status(400).json({ message: "Неверный логин", class: "auth-error" });
   }
 });
-
 // Главная страница
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`));

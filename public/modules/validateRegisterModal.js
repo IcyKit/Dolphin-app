@@ -91,25 +91,22 @@ const validateRegisterModal = async (registrationPopup) => {
   const allInputs = registrationPopup.querySelectorAll("input");
   const allInputBoxes = registrationPopup.querySelectorAll(".input-box");
   if (!validationError) {
+    allInputBoxes.forEach((box) => {
+      box.classList.remove("error-input");
+    });
     const result = await postData(
       registerNicknameForm.value,
       registerPasswordForm.value,
       registerEmailForm.value
     );
-    if (result.status === 400) {
-      const el = document.createElement("p");
-      el.classList.add("isUser");
-      el.innerHTML = "Такой пользователь уже существует";
-      const form = document.querySelector(".sign-up__form");
-      form.append(el);
-    } else {
-      console.log("Другой статус");
-    }
+    const resultData = await result.json();
+    const el = document.createElement("p");
+    el.classList.add(resultData.class);
+    el.innerHTML = resultData.message;
+    const form = document.querySelector(".sign-up__form");
+    form.append(el);
     allInputs.forEach((input) => {
       input.value = "";
-    });
-    allInputBoxes.forEach((box) => {
-      box.classList.remove("error-input");
     });
   }
 };

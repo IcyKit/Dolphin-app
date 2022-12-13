@@ -1,5 +1,5 @@
 const validateAuthModal = async (authPopup) => {
-  const validationError = false;
+  let validationError = false;
   const authNicknameOrEmailForm = document.querySelector(
     "#auth_nickname_email"
   );
@@ -22,7 +22,7 @@ const validateAuthModal = async (authPopup) => {
       nicknameOrEmailInputBox.classList.add("error-input");
       passwordInputBox.classList.add("error-input");
       passwordInputBox.append(errorText);
-      inputError = true;
+      validationError = true;
     }
   };
   const authUser = async (nickname, password) => {
@@ -46,14 +46,18 @@ const validateAuthModal = async (authPopup) => {
   const allInputBoxes = document.querySelectorAll(".input-box");
 
   if (!validationError) {
+    allInputBoxes.forEach((box) => {
+      box.classList.remove("error-input");
+    });
     const result = await authUser(
       authNicknameOrEmailForm.value.trim(),
       authPasswordForm.value.trim()
     );
+    const resultData = await result.json();
     if (result.status === 400) {
       const el = document.createElement("p");
-      el.classList.add("isUser");
-      el.innerHTML = "Пользователь не найден";
+      el.classList.add(resultData.class);
+      el.innerHTML = resultData.message;
       const form = document.querySelector(".sign-in__form");
       form.append(el);
     } else {
@@ -61,9 +65,6 @@ const validateAuthModal = async (authPopup) => {
     }
     allInputs.forEach((input) => {
       input.value = "";
-    });
-    allInputBoxes.forEach((box) => {
-      box.classList.remove("error-input");
     });
   }
 };

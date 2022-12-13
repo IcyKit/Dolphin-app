@@ -21,8 +21,15 @@ aside {
   transition: transform 1s;
 }
 
-.isUser {
+.auth-error {
   color: red;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.auth-success {
+  color: green;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
