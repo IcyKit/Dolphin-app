@@ -68,10 +68,11 @@ const validateRegisterModal = async (registrationPopup) => {
     }
   };
 
-  const postData = async (nickname, password) => {
+  const postData = async (nickname, password, email) => {
     const data = {
       nickname,
       password,
+      email,
     };
     const req = await fetch("/createUser", {
       method: "POST",
@@ -80,38 +81,33 @@ const validateRegisterModal = async (registrationPopup) => {
       },
       body: JSON.stringify(data),
     });
-    const response = req;
-    console.log(response);
-    return response;
+    return req;
   };
 
   removeAllParagraphs();
   validatePassword();
   validateAllInputValue();
   validateEmail();
-  const allInputs = document.querySelectorAll("input");
-  const allInputBoxes = document.querySelectorAll(".input-box");
+  const allInputs = registrationPopup.querySelectorAll("input");
+  const allInputBoxes = registrationPopup.querySelectorAll(".input-box");
   if (!validationError) {
-    const result = await postData(
-      registerNicknameForm.value,
-      registerPasswordForm.value
-    );
-    if (result.status === 400) {
-      const el = document.createElement("p");
-      el.classList.add("isUser");
-      el.innerHTML = "Такой пользователь уже существует";
-      const form = document.querySelector(".sign-up__form");
-      form.append(el);
-    } else {
-      console.log("Другой статус");
-    }
-    allInputs.forEach((input) => {
-      input.value = "";
-    });
     allInputBoxes.forEach((box) => {
       box.classList.remove("error-input");
     });
-  } else {
+    const result = await postData(
+      registerNicknameForm.value,
+      registerPasswordForm.value,
+      registerEmailForm.value
+    );
+    const resultData = await result.json();
+    const el = document.createElement("p");
+    el.classList.add(resultData.class);
+    el.innerHTML = resultData.message;
+    const form = document.querySelector(".sign-up__form");
+    form.append(el);
+    allInputs.forEach((input) => {
+      input.value = "";
+    });
   }
 };
 

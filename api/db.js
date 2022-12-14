@@ -2,7 +2,6 @@ const { Client } = require("pg");
 
 const connectionString =
   "postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development";
-
 const makeNewClient = () => {
   return new Client({
     connectionString,
@@ -27,7 +26,6 @@ const createPost = async (user_id, content) => {
   client.connect();
   const queryString = `INSERT INTO posts (user_id, content) VALUES (${user_id}, '${content}')`;
   await client.query(queryString);
-  // console.log(user_id, content);
   client.end();
 };
 
@@ -47,15 +45,15 @@ const updatePost = async (post_id, content) => {
   client.end();
 };
 
-const createUser = async (nickname, password) => {
+const createUser = async (nickname, password, email) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `INSERT INTO users (nickname, password, name) VALUES ('${nickname}', '${password}', '${nickname}')`;
+  const queryString = `INSERT INTO users (nickname, password, name, email) VALUES ('${nickname}', '${password}', '${nickname}', '${email}')`;
   await client.query(queryString);
   client.end();
 };
 
-const checkUser = async (nickname, password) => {
+const checkUser = async (nickname) => {
   const client = makeNewClient();
   client.connect();
   const queryString = `SELECT EXISTS (SELECT * FROM users WHERE nickname = '${nickname}')`;
@@ -65,11 +63,44 @@ const checkUser = async (nickname, password) => {
   return isUser;
 };
 
+const checkEmail = async (email) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE email = '${email}')`;
+  const result = await client.query(queryString);
+  const isEmail = result.rows[0].exists;
+  client.end();
+  return isEmail;
+};
+
+const loginUser = async (nicknameOrEmail, password) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE (nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}') AND password = '${password}')`;
+  const result = await client.query(queryString);
+  const isUser = result.rows[0].exists;
+  client.end();
+  return isUser;
+};
+
+const getHashedPassword = async (nicknameOrEmail) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT nickname, email, password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
+  const result = await client.query(queryString);
+  const userData = result.rows[0].password;
+  client.end();
+  return userData;
+};
+
 module.exports = {
   getPosts,
   createPost,
   deletePost,
   updatePost,
   checkUser,
+  checkEmail,
   createUser,
+  loginUser,
+  getHashedPassword,
 };
