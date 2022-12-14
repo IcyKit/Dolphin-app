@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const url = require("url");
 const bcrypt = require("bcrypt");
 
 const {
@@ -43,8 +42,7 @@ app.delete("/posts/:id", jsonParser, async (req, res) => {
 
 // Обновление поста
 app.post("/posts/:id", jsonParser, async (req, res) => {
-  const urlArr = url.parse(req.url, true).path.split("/");
-  const postId = urlArr.at(-1);
+  const postId = req.params.id;
   const { content } = await req.body;
   await updatePost(postId, content);
   res.send("Пост обновлен!");
