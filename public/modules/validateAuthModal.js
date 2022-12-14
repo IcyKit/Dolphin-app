@@ -56,7 +56,7 @@ const validateAuthModal = async (authPopup) => {
     const resultData = await result.json();
     if (result.status === 400) {
       const el = document.createElement("p");
-      el.classList.add(resultData.class);
+      el.classList.add("auth-error");
       el.innerHTML = resultData.message;
       const form = document.querySelector(".sign-in__form");
       form.append(el);

@@ -101,7 +101,11 @@ const validateRegisterModal = async (registrationPopup) => {
     );
     const resultData = await result.json();
     const el = document.createElement("p");
-    el.classList.add(resultData.class);
+    if (result.status === 400) {
+      el.classList.add("auth-error");
+    } else {
+      el.classList.add("auth-success");
+    }
     el.innerHTML = resultData.message;
     const form = document.querySelector(".sign-up__form");
     form.append(el);

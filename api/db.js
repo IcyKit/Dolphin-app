@@ -86,11 +86,14 @@ const loginUser = async (nicknameOrEmail, password) => {
 const getHashedPassword = async (nicknameOrEmail) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `SELECT nickname, email, password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
+  const queryString = `SELECT password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
   const result = await client.query(queryString);
-  const userData = result.rows[0].password;
   client.end();
-  return userData;
+  if (result.rows[0]) {
+    return result.rows[0].password;
+  } else {
+    return false;
+  }
 };
 
 module.exports = {

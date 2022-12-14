@@ -36,8 +36,7 @@ app.post("/posts", jsonParser, async (req, res) => {
 
 // Удаление поста
 app.delete("/posts/:id", jsonParser, async (req, res) => {
-  const urlArr = url.parse(req.url, true).path.split("/");
-  const postId = urlArr.at(-1);
+  const postId = req.params.id;
   await deletePost(postId);
   res.send("Пост удален!");
 });
@@ -53,46 +52,37 @@ app.post("/posts/:id", jsonParser, async (req, res) => {
 
 app.post("/createUser", jsonParser, async (req, res) => {
   const { nickname, password, email } = req.body;
-  const resultNickname = await checkUser(nickname);
   const resultEmail = await checkEmail(email);
   const hashedPassword = await bcrypt.hash(password, 10);
+  const resultNickname = await checkUser(nickname);
   if (resultNickname) {
-    res
-      .status(400)
-      .json({ message: "Имя пользователя занято", class: "auth-error" });
+    res.status(400).json({ message: "Имя пользователя занято" });
   } else if (resultEmail) {
     res.status(400).json({
       message: "На эту почту уже зарегистрирован аккаунт",
-      class: "auth-error",
     });
   } else {
     await createUser(nickname, hashedPassword, email);
-    res
-      .status(200)
-      .json({ message: "Пользователь успешно создан", class: "auth-success" });
+    res.status(200).json({ message: "Пользователь успешно создан" });
   }
 });
 
 app.post("/login", jsonParser, async (req, res) => {
-  try {
-    const { nickname, password } = req.body;
-    const userPassword = await getHashedPassword(nickname);
-    const match = await bcrypt.compare(password, userPassword);
-    if (match) {
-      const result = await loginUser(nickname, userPassword);
-      if (result) {
-        res.status(200).json({
-          message: "Пользователь успешно авторизован",
-          class: "auth-success",
-        });
-      }
-    } else {
-      res.status(400).json({ message: "Неверный пароль", class: "auth-error" });
-    }
-  } catch (e) {
-    res.status(400).json({ message: "Неверный логин", class: "auth-error" });
+  const { nickname, password } = req.body;
+  const userPassword = await getHashedPassword(nickname);
+  if (!userPassword) {
+    res.status(400).json({ message: "Неверный логин" });
+    return;
   }
+  const match = await bcrypt.compare(password, userPassword);
+  if (!match) {
+    res.status(400).json({ message: "Неверный пароль" });
+    return;
+  }
+  await loginUser(nickname, userPassword);
+  res.status(200).json({ message: "Пользователь успешно авторизован" });
 });
+
 // Главная страница
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
