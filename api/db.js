@@ -96,6 +96,22 @@ const getHashedPassword = async (nicknameOrEmail) => {
   }
 };
 
+const generateSession = async (token, nickname, date) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `INSERT INTO sessions (token, user_id, created_at) VALUES ('${token}', (SELECT id FROM users WHERE nickname = '${nickname}'), '${date}')`;
+  await client.query(queryString);
+  client.end();
+};
+
+const updateSession = async (token, nicknameOrEmail, date) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `UPDATE sessions SET token = '${token}', created_at = '${date}' WHERE user_id = (SELECT id FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}')`;
+  await client.query(queryString);
+  client.end();
+};
+
 module.exports = {
   getPosts,
   createPost,
@@ -106,4 +122,6 @@ module.exports = {
   createUser,
   loginUser,
   getHashedPassword,
+  generateSession,
+  updateSession,
 };

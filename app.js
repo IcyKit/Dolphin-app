@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 const {
   getPosts,
@@ -12,6 +13,8 @@ const {
   createUser,
   loginUser,
   getHashedPassword,
+  generateSession,
+  updateSession,
 } = require("./api/db.js");
 
 const app = express();
@@ -61,7 +64,13 @@ app.post("/createUser", jsonParser, async (req, res) => {
     });
   } else {
     await createUser(nickname, hashedPassword, email);
-    res.status(200).json({ message: "Пользователь успешно создан" });
+    const token = crypto.randomUUID();
+    const dateNow = new Date().toISOString();
+    await generateSession(token, nickname, dateNow);
+    res
+      .status(200)
+      .cookie("token", token)
+      .json({ message: "Пользователь успешно создан" });
   }
 });
 
@@ -78,7 +87,13 @@ app.post("/login", jsonParser, async (req, res) => {
     return;
   }
   await loginUser(nickname, userPassword);
-  res.status(200).json({ message: "Пользователь успешно авторизован" });
+  const token = crypto.randomUUID();
+  const date = new Date().toISOString();
+  await updateSession(token, nickname, date);
+  res
+    .status(200)
+    .cookie("token", token)
+    .json({ message: "Пользователь успешно авторизован" });
 });
 
 // Главная страница
