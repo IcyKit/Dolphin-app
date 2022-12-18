@@ -15,7 +15,9 @@ const {
   getHashedPassword,
   generateSession,
   updateSession,
+  login,
 } = require("./api/db.js");
+const { log } = require("console");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -94,6 +96,17 @@ app.post("/login", jsonParser, async (req, res) => {
     .status(200)
     .cookie("token", token)
     .json({ message: "Пользователь успешно авторизован" });
+});
+
+app.get("/feed.json", jsonParser, async (req, res) => {
+  const { nickname, token } = req.body;
+  const loginResult = await login(nickname, token);
+  if (loginResult) {
+    res.status(200).json({ message: "Пользователь успешно авторизован" });
+  } else {
+    res.status(401).json({ message: "Токена не существует" });
+  }
+  res.end();
 });
 
 // Главная страница

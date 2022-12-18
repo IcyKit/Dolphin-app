@@ -83,6 +83,28 @@ const loginUser = async (nicknameOrEmail, password) => {
   return isUser;
 };
 
+const login = async (nickname, token) => {
+  let dateNow = new Date();
+  let sevenDaysBefore = new Date(
+    dateNow.getFullYear(),
+    dateNow.getMonth(),
+    dateNow.getDate() - 7,
+    dateNow.getHours(),
+    dateNow.getMinutes()
+  );
+  dateNow = dateNow.toISOString();
+  sevenDaysBefore = sevenDaysBefore.toISOString();
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT token FROM sessions AS s INNER JOIN users AS u ON s.user_id = u.id WHERE nickname = '${nickname}' and (created_at BETWEEN '${sevenDaysBefore}' AND '${dateNow}')`;
+  const result = await client.query(queryString);
+  client.end();
+  if (!result.rows[0].token || result.rows[0].token !== token) {
+    return false;
+  }
+  return true;
+};
+
 const getHashedPassword = async (nicknameOrEmail) => {
   const client = makeNewClient();
   client.connect();
@@ -124,4 +146,5 @@ module.exports = {
   getHashedPassword,
   generateSession,
   updateSession,
+  login,
 };
