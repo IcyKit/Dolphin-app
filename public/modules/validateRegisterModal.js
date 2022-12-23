@@ -1,4 +1,7 @@
 const validateRegisterModal = async (registrationPopup) => {
+  let spinner = document.querySelector("#spinnerReg");
+  spinner.classList.remove("spinner-hide");
+  spinner.classList.add("spinner-show");
   const registerEmailForm = document.querySelector("#register_email");
   const registerPasswordForm = document.querySelector("#register_password");
   const registerPasswordRepeatForm = document.querySelector(
@@ -105,10 +108,13 @@ const validateRegisterModal = async (registrationPopup) => {
       el.classList.add("auth-error");
     } else {
       el.classList.add("auth-success");
+      window.location.href = "/feed";
     }
     el.innerHTML = resultData.message;
     const form = document.querySelector(".sign-up__form");
     form.append(el);
+    spinner.classList.remove("spinner-show");
+    spinner.classList.add("spinner-hide");
     allInputs.forEach((input) => {
       input.value = "";
     });

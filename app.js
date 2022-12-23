@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-
+const cookieParser = require("cookie-parser");
 const {
   getPosts,
   createPost,
@@ -24,6 +24,7 @@ const port = process.env.PORT || 3001;
 
 const jsonParser = bodyParser.json();
 app.use(express.static("public"));
+app.use(cookieParser());
 
 // Получение постов
 app.get("/posts", async (req, res) => {
@@ -33,24 +34,50 @@ app.get("/posts", async (req, res) => {
 
 // Создание поста
 app.post("/posts", jsonParser, async (req, res) => {
-  const { user_id, content } = req.body;
-  await createPost(user_id, content);
-  res.send("Пост добавлен");
+  const { user_id, content, nickname } = req.body;
+  const token = req.cookies.token;
+  if (token) {
+    const loginResult = await login(nickname, token);
+    if (!loginResult) {
+      return res.status(401).json({ message: "Токена не существует" });
+    }
+    await createPost(user_id, content);
+    return res.status(200).json({ message: "Пост обновлен!" });
+  }
+  return res.status(400).json({ message: "Доступ запрещен" });
 });
 
 // Удаление поста
 app.delete("/posts/:id", jsonParser, async (req, res) => {
-  const postId = req.params.id;
-  await deletePost(postId);
-  res.send("Пост удален!");
+  const { nickname } = req.body;
+  const token = req.cookies.token;
+  if (token) {
+    const loginResult = await login(nickname, token);
+    if (!loginResult) {
+      return res.status(401).json({ message: "Токена не существует" });
+    }
+    const postId = req.params.id;
+    await deletePost(postId);
+    return res.status(200).json({ message: "Пост удален!" });
+  }
+  return res.status(400).json({ message: "Доступ запрещен" });
 });
 
 // Обновление поста
 app.post("/posts/:id", jsonParser, async (req, res) => {
-  const postId = req.params.id;
-  const { content } = await req.body;
-  await updatePost(postId, content);
-  res.send("Пост обновлен!");
+  const { nickname } = req.body;
+  const token = req.cookies.token;
+  if (token) {
+    const loginResult = await login(nickname, token);
+    if (!loginResult) {
+      return res.status(401).json({ message: "Токена не существует" });
+    }
+    const postId = req.params.id;
+    const { content } = await req.body;
+    await updatePost(postId, content);
+    return res.status(200).json({ message: "Пост обновлен!" });
+  }
+  return res.status(400).json({ message: "Доступ запрещен" });
 });
 
 app.post("/createUser", jsonParser, async (req, res) => {
@@ -74,43 +101,60 @@ app.post("/createUser", jsonParser, async (req, res) => {
       .cookie("token", token)
       .json({ message: "Пользователь успешно создан" });
   }
+  res.end();
 });
 
 app.post("/login", jsonParser, async (req, res) => {
   const { nickname, password } = req.body;
   const userPassword = await getHashedPassword(nickname);
   if (!userPassword) {
-    res.status(400).json({ message: "Неверный логин" });
-    return;
+    return res.status(400).json({ message: "Неверный логин" });
   }
   const match = await bcrypt.compare(password, userPassword);
   if (!match) {
-    res.status(400).json({ message: "Неверный пароль" });
-    return;
+    return res.status(400).json({ message: "Неверный пароль" });
   }
   await loginUser(nickname, userPassword);
   const token = crypto.randomUUID();
   const date = new Date().toISOString();
   await updateSession(token, nickname, date);
-  res
+  return res
     .status(200)
     .cookie("token", token)
     .json({ message: "Пользователь успешно авторизован" });
 });
 
 app.get("/feed.json", jsonParser, async (req, res) => {
-  const { nickname, token } = req.body;
-  const loginResult = await login(nickname, token);
-  if (loginResult) {
-    res.status(200).json({ message: "Пользователь успешно авторизован" });
-  } else {
-    res.status(401).json({ message: "Токена не существует" });
+  const { nickname } = req.body;
+  const token = req.cookies.token;
+  if (token) {
+    const loginResult = await login(nickname, token);
+    if (!loginResult) {
+      return res.status(401).json({ message: "Токена не существует" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Пользователь успешно авторизован" });
   }
-  res.end();
+  return res.status(400).json({ message: "Доступ запрещен" }); // Добавил на свое усмотрение ошибку, если токен не найден
+});
+
+app.get("/feed", jsonParser, async (req, res) => {
+  const token = req.cookies.token;
+  if (token) {
+    return res
+      .status(200)
+      .json({ message: "Пользователь на странице с постами" });
+  }
+  return res.status(400).json({ message: "Вы не авторизированы" });
 });
 
 // Главная страница
 app.get("/", async (req, res) => {
+  const token = req.cookies.token;
+  if (token) {
+    return res.redirect("/feed");
+  }
   res.sendFile(__dirname + "/public/index.html");
 });
 

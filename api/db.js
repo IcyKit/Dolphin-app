@@ -96,10 +96,10 @@ const login = async (nickname, token) => {
   sevenDaysBefore = sevenDaysBefore.toISOString();
   const client = makeNewClient();
   client.connect();
-  const queryString = `SELECT token FROM sessions AS s INNER JOIN users AS u ON s.user_id = u.id WHERE nickname = '${nickname}' and (created_at BETWEEN '${sevenDaysBefore}' AND '${dateNow}')`;
+  const queryString = `SELECT token FROM sessions AS s INNER JOIN users AS u ON s.user_id = u.id WHERE nickname = '${nickname}' AND token = '${token}' AND (created_at BETWEEN '${sevenDaysBefore}' AND '${dateNow}')`;
   const result = await client.query(queryString);
   client.end();
-  if (!result.rows[0].token || result.rows[0].token !== token) {
+  if (!result.rows[0] || result.rows[0].token !== token) {
     return false;
   }
   return true;
