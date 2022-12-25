@@ -1,4 +1,7 @@
 const validateAuthModal = async (authPopup) => {
+  let spinner = document.querySelector("#spinnerAuth");
+  spinner.classList.remove("spinner-hide");
+  spinner.classList.add("spinner-show");
   let validationError = false;
   const authNicknameOrEmailForm = document.querySelector(
     "#auth_nickname_email"
@@ -56,13 +59,15 @@ const validateAuthModal = async (authPopup) => {
     const resultData = await result.json();
     if (result.status === 400) {
       const el = document.createElement("p");
-      el.classList.add(resultData.class);
+      el.classList.add("auth-error");
       el.innerHTML = resultData.message;
       const form = document.querySelector(".sign-in__form");
       form.append(el);
     } else {
-      alert("Успешная авторизация");
+      window.location.href = "/feed";
     }
+    spinner.classList.remove("spinner-show");
+    spinner.classList.add("spinner-hide");
     allInputs.forEach((input) => {
       input.value = "";
     });

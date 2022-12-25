@@ -7,6 +7,11 @@ import createBlogs from "./modules/createBlogs.js";
 import validateAuthModal from "./modules/validateAuthModal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Проверка на существование сессии
+  const token = document.cookie.split("=")[1];
+  if (token) {
+    window.location.href = "/feed";
+  }
   const registrationPopup = document.querySelector("#register_popup");
   const registrationBtn = document.querySelector("#register_btn");
   // Открытие окна регистрации

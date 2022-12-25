@@ -83,14 +83,55 @@ const loginUser = async (nicknameOrEmail, password) => {
   return isUser;
 };
 
+const login = async (nickname, token) => {
+  let dateNow = new Date();
+  let sevenDaysBefore = new Date(
+    dateNow.getFullYear(),
+    dateNow.getMonth(),
+    dateNow.getDate() - 7,
+    dateNow.getHours(),
+    dateNow.getMinutes()
+  );
+  dateNow = dateNow.toISOString();
+  sevenDaysBefore = sevenDaysBefore.toISOString();
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT token FROM sessions AS s INNER JOIN users AS u ON s.user_id = u.id WHERE nickname = '${nickname}' AND token = '${token}' AND (created_at BETWEEN '${sevenDaysBefore}' AND '${dateNow}')`;
+  const result = await client.query(queryString);
+  client.end();
+  if (!result.rows[0] || result.rows[0].token !== token) {
+    return false;
+  }
+  return true;
+};
+
 const getHashedPassword = async (nicknameOrEmail) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `SELECT nickname, email, password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
+  const queryString = `SELECT password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
   const result = await client.query(queryString);
-  const userData = result.rows[0].password;
   client.end();
-  return userData;
+  if (result.rows[0]) {
+    return result.rows[0].password;
+  } else {
+    return false;
+  }
+};
+
+const generateSession = async (token, nickname, date) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `INSERT INTO sessions (token, user_id, created_at) VALUES ('${token}', (SELECT id FROM users WHERE nickname = '${nickname}'), '${date}')`;
+  await client.query(queryString);
+  client.end();
+};
+
+const updateSession = async (token, nicknameOrEmail, date) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `UPDATE sessions SET token = '${token}', created_at = '${date}' WHERE user_id = (SELECT id FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}')`;
+  await client.query(queryString);
+  client.end();
 };
 
 module.exports = {
@@ -103,4 +144,7 @@ module.exports = {
   createUser,
   loginUser,
   getHashedPassword,
+  generateSession,
+  updateSession,
+  login,
 };
