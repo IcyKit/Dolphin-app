@@ -217,10 +217,6 @@ footer > .active {
 }
 
 @media screen and (min-width: 992px) {
-  body {
-    background-color: #f4f5f7;
-  }
-
   .container {
     max-width: 960px;
   }
@@ -233,163 +229,8 @@ footer > .active {
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
   }
 
-  header {
-    margin-bottom: 30px;
-    background-color: #fff;
-    height: 100%;
-  }
-
-  header svg {
-    position: absolute;
-  }
-
-  header path {
-    fill: #0057ff;
-  }
-
-  .header--flexed {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .header-avatar {
-    display: block;
-    padding: 8px 16px 8px 0;
-  }
-
-  .header-avatar-img {
-    display: block;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-  }
-
-  .header-menu {
-    display: flex;
-  }
-
-  .header-menu__item-content {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 20px;
-    color: #b1b1b1;
-    padding: 22px 20px;
-  }
-
-  header h2 {
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 20px;
-  }
-
-  .header-menu__item {
-    margin-right: 20px;
-    height: 100%;
-  }
-
-  .header-menu__item img {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-  }
-
-  .header-menu__item-active {
-    border-bottom: 3px solid #0057ff;
-  }
-
-  .header-menu__item-active h2 {
-    color: #0057ff;
-  }
-
   .divider {
     display: none;
-  }
-
-  .new-post {
-    display: block;
-    margin-bottom: 15px;
-  }
-
-  .new-post-input {
-    width: 630px;
-    padding: 20px 15px;
-    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
-    border: none;
-    outline: none;
-    font-size: 16px;
-    line-height: 24px;
-    color: #abacb1;
-    border-radius: 10px;
-  }
-
-  .new-post-input::placeholder {
-    font-size: 16px;
-    line-height: 24px;
-    color: #abacb1;
-  }
-
-  .last-messages__content {
-    background-color: #fff;
-    max-width: 630px;
-    border-radius: 10px;
-    margin-right: 15px;
-    padding: 16px;
-  }
-
-  .last-messages__box {
-    margin-bottom: 30px;
-    padding: 0;
-  }
-
-  .last-messages__box:last-child {
-    margin-bottom: 0;
-  }
-
-  .last-messages__box-message {
-    margin-bottom: 10px;
-  }
-
-  .last-messages__box-title {
-    margin-bottom: 5px;
-  }
-
-  .last-messages__box-title_left {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .last-messages__box-title_left h3 {
-    margin-right: 15px;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .last-messages__box-title_left p {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .last-messages__box-time {
-    max-width: 126px;
-    font-size: 14px;
-    line-height: 24px;
-  }
-
-  .last-messages__box-statistics {
-    max-width: 250px;
-  }
-
-  main > .container {
-    padding: 0;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  .main__box {
-    display: flex;
   }
 
   footer {
@@ -522,10 +363,6 @@ footer > .active {
     font-size: 10px;
     line-height: 16px;
     color: #abacb1;
-  }
-
-  .main__box {
-    display: flex;
   }
 
   .bloggers h3 {
