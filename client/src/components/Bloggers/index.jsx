@@ -6,17 +6,17 @@ const Bloggers = () => {
     {
       name: "Хабр Научпоп",
       nickname: "habr_popsci",
-      avatarUrl: "../../../public/blogger1.png",
+      avatarUrl: "/blogger1.png",
     },
     {
       name: "Матч ТВ",
       nickname: "MatchTV",
-      avatarUrl: "../../../public/blogger2.png",
+      avatarUrl: "/blogger2.png",
     },
     {
       name: "Популярная механика",
       nickname: "PopMechanica",
-      avatarUrl: "../../../public/blogger3.png",
+      avatarUrl: "/blogger3.png",
     },
   ];
 
