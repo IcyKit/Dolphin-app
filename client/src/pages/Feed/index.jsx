@@ -5,6 +5,7 @@ import ProfileInfo from "../../components/ProfileInfo";
 import Actual from "../../components/Actual";
 import Bloggers from "../../components/Bloggers";
 import Footer from "../../components/Footer";
+import CreatePostDesktop from "../../components/CreatePostDesktop";
 
 const Feed = () => {
     return (
@@ -13,6 +14,7 @@ const Feed = () => {
                 <div className="main__box">
                     <section className="last-messages">
                         <CreatePost />
+                        <CreatePostDesktop />
                         <Posts />
                     </section>
                     <aside>
