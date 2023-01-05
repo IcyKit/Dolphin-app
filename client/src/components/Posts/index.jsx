@@ -25,7 +25,7 @@ const posts = [
   {
     avatarUrl: "/sport.png",
     text: "Кстати, год назад сборная была на 39-м месте. Прорыв! А лидер рейтинга вновь не поменялся.",
-    attachment: "../../../public/karpin.png",
+    attachment: "/karpin.png",
     name: "Sports.ru",
     nickname: "sportsru",
     date: "30 минут назад",

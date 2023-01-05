@@ -145,7 +145,6 @@ main > .container {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: url("/resources/progress-circle.png");
   display: flex;
   align-items: center;
   justify-content: center;

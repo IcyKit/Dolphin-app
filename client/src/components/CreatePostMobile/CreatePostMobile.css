@@ -1,0 +1,125 @@
+.btn {
+  margin-bottom: 0;
+}
+
+.post-popup-mobile {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+}
+
+.post-popup-content {
+  position: absolute;
+  padding: 15px;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  background: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.post-popup-comment {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.post-popup-drag {
+  background: #abacb1;
+  width: 50px;
+  height: 4px;
+  margin: 0 auto;
+  border-radius: 100px;
+  margin-bottom: 30px;
+}
+
+.post-popup-replyto {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.post-popup-replyto img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-popup-replyto p {
+  font-size: 18px;
+  line-height: 24px;
+  color: #abacb1;
+}
+
+.post-popup-message textarea {
+  width: 100%;
+  height: 140px;
+  border: none;
+  outline: none;
+  font-family: "Lato", sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #1d1e22;
+}
+
+.post-popup-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.post-popup-circle {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-popup-circle p {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 24px;
+  color: #0057ff;
+  top: 15px;
+}
+
+.post-popup-attach > .btn {
+  border-radius: 10px;
+  width: 61px;
+  height: 52px;
+}
+
+.post-popup-send > .btn {
+  padding: 15px 18px;
+  border-radius: 10px;
+  width: 183px;
+  background-color: #0057ff;
+  height: 52px;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #ffffff;
+}
+
+@media screen and (min-width: 992px) {
+  .post-popup-mobile {
+    display: none;
+  }
+
+  .post-popup-circle p {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 24px;
+    color: #0057ff;
+    top: 10px;
+  }
+}

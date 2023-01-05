@@ -6,6 +6,7 @@ import Actual from "../../components/Actual";
 import Bloggers from "../../components/Bloggers";
 import Footer from "../../components/Footer";
 import CreatePostDesktop from "../../components/CreatePostDesktop";
+import CreatePostMobile from "../../components/CreatePostMobile";
 
 const Feed = () => {
     return (
@@ -15,6 +16,7 @@ const Feed = () => {
                     <section className="last-messages">
                         <CreatePost />
                         <CreatePostDesktop />
+                        <CreatePostMobile />
                         <Posts />
                     </section>
                     <aside>
