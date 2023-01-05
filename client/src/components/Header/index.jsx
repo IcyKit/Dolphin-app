@@ -6,28 +6,12 @@ const Header = () => {
     <header>
       <div class="header--flexed">
         <div class="header-menu">
-          <HeaderItem
-            title="Главная"
-            icon="../../../public/home.png"
-            isActive={true}
-          />
-          <HeaderItem
-            title="Уведомления"
-            icon="../../../public/bell.png"
-            isActive={false}
-          />
-          <HeaderItem
-            title="Cообщения"
-            icon="../../../public/message.png"
-            isActive={false}
-          />
+          <HeaderItem title="Главная" icon="/home.png" isActive={true} />
+          <HeaderItem title="Уведомления" icon="/bell.png" isActive={false} />
+          <HeaderItem title="Cообщения" icon="/message.png" isActive={false} />
         </div>
         <div class="header-avatar">
-          <img
-            src="../../../public/trump.png"
-            alt=""
-            class="header-avatar-img"
-          />
+          <img src="/trump.png" alt="" class="header-avatar-img" />
         </div>
       </div>
       <svg

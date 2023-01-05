@@ -27,15 +27,15 @@ const PostItem = ({
           </div>
           <div class="last-messages__box-statistics">
             <div class="last-messages__box-statistic">
-              <img src="../../../public/reply.png" alt="Reply" />
+              <img src="/reply.png" alt="Reply" />
               <p class="last-messages__box-statistic-title">{replies}</p>
             </div>
             <div class="last-messages__box-statistic">
-              <img src="../../../public/like.png" alt="Like" />
+              <img src="/like.png" alt="Like" />
               <p class="last-messages__box-statistic-title">{likes}</p>
             </div>
             <div class="last-messages__box-statistic">
-              <img src="../../../public/forward.png" alt="Forward" />
+              <img src="/forward.png" alt="Forward" />
               <p class="last-messages__box-statistic-title">{forward}</p>
             </div>
           </div>

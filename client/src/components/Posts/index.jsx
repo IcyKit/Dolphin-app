@@ -3,7 +3,7 @@ import "./Posts.css";
 
 const posts = [
   {
-    avatarUrl: "../../../public/musk.png",
+    avatarUrl: "/musk.png",
     text: "Has anybody seen web3? I can't find it.",
     name: "Elon Musk",
     nickname: "elonmusk",
@@ -13,7 +13,7 @@ const posts = [
     forward: 9,
   },
   {
-    avatarUrl: "../../../public/roizman.png",
+    avatarUrl: "/roizman.png",
     text: "Пробежал десятку по набережной. Снег идет, тихо, светло. Все будет хорошо.",
     name: "Евгений Ройзман",
     nickname: "roizmangbn",
@@ -23,7 +23,7 @@ const posts = [
     forward: 9,
   },
   {
-    avatarUrl: "../../../public/sport.png",
+    avatarUrl: "/sport.png",
     text: "Кстати, год назад сборная была на 39-м месте. Прорыв! А лидер рейтинга вновь не поменялся.",
     attachment: "../../../public/karpin.png",
     name: "Sports.ru",
@@ -34,7 +34,7 @@ const posts = [
     forward: 9,
   },
   {
-    avatarUrl: "../../../public/man.png",
+    avatarUrl: "/man.png",
     text: "В столице Австрии уже который месяц продолжаются митинги против введения электронных паспортов. В современной истории ещё не было таких массовых, продолжительных и глобальных протестов. Но журналистам не интересно рассказывать о том, что на самом деле волнует людей.",
     name: "Михаил",
     nickname: "msvetov",

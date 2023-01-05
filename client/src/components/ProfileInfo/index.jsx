@@ -4,7 +4,7 @@ const ProfileInfo = () => {
   return (
     <div class="profile-info aside__card card-shadow">
       <div class="profile-info__header">
-        <img src="./resources/trump.png" alt="avatar" />
+        <img src="/trump.png" alt="avatar" />
         <div class="profile-info__header-title">
           <h2>Donald</h2>
           <p>@donaldjtrump</p>

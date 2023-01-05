@@ -4,7 +4,7 @@ const ActualItem = ({ title, location, messages }) => {
       <h4>{title}</h4>
       <div class="actual__theme-description">
         <div class="actual__theme-destination">
-          <img src="../../../public/mark.png" alt="mark" />
+          <img src="/mark.png" alt="mark" />
           <h5>{location}</h5>
         </div>
         <p>{messages} сообщений</p>
