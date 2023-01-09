@@ -109,7 +109,7 @@
 
   .last-messages__content {
     background-color: #fff;
-    max-width: 630px;
+    width: 630px;
     border-radius: 10px;
     margin-right: 15px;
     padding: 16px;

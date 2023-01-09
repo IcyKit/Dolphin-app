@@ -1,63 +1,31 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import PostItem from "../PostItem";
 import "./Posts.css";
 
-const posts = [
-  {
-    avatarUrl: "/musk.png",
-    text: "Has anybody seen web3? I can't find it.",
-    name: "Elon Musk",
-    nickname: "elonmusk",
-    date: "28 минут назад",
-    replies: 21,
-    likes: 23,
-    forward: 9,
-  },
-  {
-    avatarUrl: "/roizman.png",
-    text: "Пробежал десятку по набережной. Снег идет, тихо, светло. Все будет хорошо.",
-    name: "Евгений Ройзман",
-    nickname: "roizmangbn",
-    date: "30 минут назад",
-    replies: 21,
-    likes: 23,
-    forward: 9,
-  },
-  {
-    avatarUrl: "/sport.png",
-    text: "Кстати, год назад сборная была на 39-м месте. Прорыв! А лидер рейтинга вновь не поменялся.",
-    attachment: "/karpin.png",
-    name: "Sports.ru",
-    nickname: "sportsru",
-    date: "30 минут назад",
-    replies: 21,
-    likes: 23,
-    forward: 9,
-  },
-  {
-    avatarUrl: "/man.png",
-    text: "В столице Австрии уже который месяц продолжаются митинги против введения электронных паспортов. В современной истории ещё не было таких массовых, продолжительных и глобальных протестов. Но журналистам не интересно рассказывать о том, что на самом деле волнует людей.",
-    name: "Михаил",
-    nickname: "msvetov",
-    date: "30 минут назад",
-    replies: 21,
-    likes: 23,
-    forward: 9,
-  },
-];
-
 const Posts = () => {
+  const [posts, setPosts] = useState([]);
+  const fetchPosts = async () => {
+    const { data } = await axios.get("http://localhost:3001/posts");
+    setPosts(data);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <div class="last-messages__content card-shadow">
       {posts.map((item) => (
         <PostItem
-          avatarUrl={item.avatarUrl}
-          text={item.text}
+          avatarUrl={item.avatarphoto}
+          text={item.content}
           name={item.name}
           nickname={item.nickname}
-          date={item.date}
+          date={item.postdate}
           replies={item.replies}
           likes={item.likes}
-          forward={item.forward}
+          forward={item.reposts}
           attachment={item.attachment}
         />
       ))}

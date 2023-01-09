@@ -17,6 +17,7 @@ const {
   generateSession,
   updateSession,
   login,
+  getUserID,
 } = require("./api/db.js");
 const { checkToken } = require("./middlewares/checkToken.js");
 const { checkLogin } = require("./middlewares/checkLogin.js");
@@ -35,9 +36,12 @@ app.get("/posts", async (req, res) => {
 });
 
 // Создание поста
-app.post("/posts", jsonParser, checkToken, checkLogin, async (req, res) => {
-  const { user_id, content } = req.body;
-  await createPost(user_id, content);
+app.post("/posts", jsonParser, async (req, res) => {
+  const { content, token } = req.body;
+  const user_id = await getUserID(token);
+  const date = new Date().toISOString();
+  // const token = req.cookies.token;
+  await createPost(user_id, content, date);
   return res.status(200).json({ message: "Пост создан!" });
 });
 

@@ -21,12 +21,21 @@ const getPosts = async () => {
   return res.rows;
 };
 
-const createPost = async (user_id, content) => {
+const createPost = async (user_id, content, date) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `INSERT INTO posts (user_id, content) VALUES (${user_id}, '${content}')`;
+  const queryString = `INSERT INTO posts (user_id, content, postdate) VALUES (${user_id}, '${content}', '${date}')`;
   await client.query(queryString);
   client.end();
+};
+
+const getUserID = async (token) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT user_id FROM sessions WHERE token = '${token}'`;
+  const user_id = await client.query(queryString);
+  client.end();
+  return user_id.rows[0].user_id;
 };
 
 const deletePost = async (post_id) => {
@@ -147,4 +156,5 @@ module.exports = {
   generateSession,
   updateSession,
   login,
+  getUserID,
 };
