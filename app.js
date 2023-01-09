@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const {
   getPosts,
@@ -23,6 +24,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 const jsonParser = bodyParser.json();
+app.use(cors());
 app.use(express.static("public"));
 app.use(cookieParser());
 

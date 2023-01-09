@@ -14,6 +14,8 @@ const CreatePostDesktop = () => {
     setText(e.target.value);
   };
 
+  const createPost = () => { };
+
   return (
     <section class="post-popup-desktop">
       <textarea
@@ -32,7 +34,7 @@ const CreatePostDesktop = () => {
         <div class="post-popup-footer-right">
           <div class="post-popup-circle">
             <CircularProgress variant="determinate" value={length / 1.4} />
-            <p>{length}</p>
+            <p>{length > 0 ? length : ""}</p>
           </div>
           <div class="post-popup-send">
             <button class="btn btn-active">Отправить</button>
