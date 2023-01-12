@@ -52,10 +52,15 @@
   text-align: center;
 }
 
-.post-popup-attach > .btn {
+.post-popup-attach > label {
+  display: inline-block;
   border-radius: 10px;
   width: 61px;
   height: 52px;
+}
+
+.post-popup-attach-name {
+  color: #0057ff;
 }
 
 .post-popup-send > .btn {
@@ -68,6 +73,10 @@
   line-height: 22px;
   text-align: center;
   color: #ffffff;
+}
+
+.post-popup-attach > button {
+  background: #0057ff !important;
 }
 
 @media screen and (min-width: 992px) {
@@ -110,6 +119,7 @@
   .post-popup-desktop-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .post-popup-circle {

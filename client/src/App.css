@@ -16,6 +16,20 @@
   text-align: center;
 }
 
+.btn-disabled {
+  background-color: #e0e0e0 !important;
+  border: none;
+  color: gray !important;
+}
+
+.uploadcare--widget__button {
+  background: #0057ff;
+}
+
+.uploadcare--dialog__powered-by {
+  display: none;
+}
+
 .last-messages {
   position: relative;
 }

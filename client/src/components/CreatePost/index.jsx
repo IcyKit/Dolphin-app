@@ -3,7 +3,7 @@ import "./CreatePost.css";
 const CreatePost = () => {
   return (
     <section className="new-post">
-      <form action="POST">
+      <form>
         <input
           type="text"
           class="new-post-input card-shadow"

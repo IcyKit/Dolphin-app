@@ -14,7 +14,7 @@ const makeSentence = (number, words) => {
 };
 
 const getTimeOfMessage = (time) => {
-  const timeElapsed = new Date() - new Date(time);
+  const timeElapsed = new Date() - new Date(time).toLocaleString("ru-RU");
   const minutes = Math.floor(timeElapsed / 1000 / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);

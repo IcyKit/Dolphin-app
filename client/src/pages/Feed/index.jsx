@@ -14,9 +14,9 @@ const Feed = () => {
             <div className="container">
                 <div className="main__box">
                     <section className="last-messages">
-                        <CreatePost />
+                        {/* <CreatePost /> */}
                         <CreatePostDesktop />
-                        <CreatePostMobile />
+                        {/* <CreatePostMobile /> */}
                         <Posts />
                     </section>
                     <aside>

@@ -26,23 +26,24 @@ const PostItem = ({
 
   const getTimeOfMessage = (time) => {
     const timeElapsed = new Date() - new Date(time);
+    console.log(timeElapsed);
     const minutes = Math.floor(timeElapsed / 1000 / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
     const minutesArr = ["минуту", "минуты", "минут"];
     const hoursArr = ["час", "часа", "часов"];
     const daysArr = ["день", "дня", "дней"];
-    // Сменить вложенность
-    if (minutes > 60) {
-      if (hours > 24) {
-        if (days > 365) {
-          return "Больше года назад";
-        }
-        return makeSentence(days, daysArr);
-      }
+    if (days > 365) {
+      return "Больше года назад";
+    } else if (days > 31) {
+      return "Больше месяца назад";
+    } else if (hours > 24) {
+      return makeSentence(days, daysArr);
+    } else if (minutes > 60) {
       return makeSentence(hours, hoursArr);
+    } else {
+      return makeSentence(minutes, minutesArr);
     }
-    return makeSentence(minutes, minutesArr);
   };
 
   const postDate = getTimeOfMessage(date);

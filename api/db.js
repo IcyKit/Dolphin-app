@@ -21,10 +21,10 @@ const getPosts = async () => {
   return res.rows;
 };
 
-const createPost = async (user_id, content, date) => {
+const createPost = async (user_id, content, attachment, date) => {
   const client = makeNewClient();
   client.connect();
-  const queryString = `INSERT INTO posts (user_id, content, postdate) VALUES (${user_id}, '${content}', '${date}')`;
+  const queryString = `INSERT INTO posts (user_id, content, postdate, attachment) VALUES (${user_id}, '${content}', '${date}', '${attachment}')`;
   await client.query(queryString);
   client.end();
 };
@@ -35,6 +35,10 @@ const getUserID = async (token) => {
   const queryString = `SELECT user_id FROM sessions WHERE token = '${token}'`;
   const user_id = await client.query(queryString);
   client.end();
+  if (!user_id.rows[0]) {
+    console.log("Юзера нет");
+    return false;
+  }
   return user_id.rows[0].user_id;
 };
 

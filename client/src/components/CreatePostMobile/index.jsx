@@ -35,7 +35,7 @@ const CreatePostMobile = () => {
           <div class="post-popup-footer">
             <div class="post-popup-circle">
               <CircularProgress variant="determinate" value={length / 1.4} />
-              <p>{length}</p>
+              {length > 0 && <p>{length}</p>}
             </div>
             <div class="post-popup-attach">
               <button class="btn">
