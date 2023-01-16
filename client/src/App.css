@@ -30,6 +30,10 @@
   display: none;
 }
 
+.uploadcare--powered-by {
+  display: none;
+}
+
 .last-messages {
   position: relative;
 }

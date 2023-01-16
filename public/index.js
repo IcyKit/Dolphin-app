@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Проверка на существование сессии
   const token = document.cookie.split("=")[1];
   if (token) {
-    window.location.href = "http://localhost:5173/feed.html";
+    window.location.href = "/feed.html";
   }
   const registrationPopup = document.querySelector("#register_popup");
   const registrationBtn = document.querySelector("#register_btn");
