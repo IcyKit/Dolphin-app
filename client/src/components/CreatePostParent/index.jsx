@@ -1,40 +1,36 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CreatePostDesktop from "../CreatePostDesktop";
 import CreatePostMobile from "../CreatePostMobile";
+import { fetchCreatePost } from "../../store/slices/posts";
 
 const CreatePostParent = () => {
   const [text, setText] = useState("");
   const [length, setLength] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const [img, setImg] = useState("");
+  const isEditorLoading = useSelector((state) => state.posts.isEditorLoading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLength(text.length);
   }, [text]);
+
+  useEffect(() => {
+    console.log(img);
+  }, [img]);
 
   const onTextInput = (e) => {
     setText(e.target.value);
   };
 
   const createPost = async () => {
-    setIsLoading(true);
-    const token = document.cookie
-      .split("=")
-      .filter((item) => item.length > 10)[0];
-    axios
-      .post("http://localhost:3001/posts", {
-        content: text,
-        token: token,
-        attachment: img,
-      })
-      .catch((e) => console.log(e.message))
-      .finally(() => setIsLoading(false));
+    dispatch(fetchCreatePost({ text, img }));
   };
 
   return (
     <>
       <CreatePostDesktop
-        isLoading={isLoading}
+        isLoading={isEditorLoading}
         text={text}
         length={length}
         createPost={createPost}
@@ -42,7 +38,7 @@ const CreatePostParent = () => {
         setImg={setImg}
       />
       <CreatePostMobile
-        isLoading={isLoading}
+        isLoading={isEditorLoading}
         text={text}
         length={length}
         createPost={createPost}
