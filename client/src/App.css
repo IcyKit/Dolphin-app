@@ -1,0 +1,78 @@
+.container {
+  padding-bottom: 36px;
+}
+
+.btn {
+  width: 100%;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border: 1px solid #0057ff;
+  background: none;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #0057ff;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+}
+
+.btn-disabled {
+  background-color: #e0e0e0 !important;
+  border: none;
+  color: gray !important;
+}
+
+.uploadcare--widget__button {
+  background: #0057ff;
+}
+
+.uploadcare--dialog__powered-by {
+  display: none;
+}
+
+.uploadcare--powered-by {
+  display: none;
+}
+
+.last-messages {
+  position: relative;
+}
+
+aside {
+  display: none;
+}
+
+.avatar-rounded {
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 992px) {
+  aside {
+    display: block;
+  }
+
+  .container {
+    padding: 0;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .aside__card {
+    background-color: #fff;
+    min-width: 312px;
+    padding: 8px 16px 14px 16px;
+    border-radius: 10px;
+  }
+
+  .btn {
+    width: 70%;
+  }
+
+  .card-shadow {
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .divider {
+    display: none;
+  }
+}

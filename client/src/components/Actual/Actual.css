@@ -1,0 +1,60 @@
+@media screen and (min-width: 992px) {
+  .actual {
+    margin-bottom: 15px;
+  }
+
+  .actual__theme {
+    max-width: 175px;
+    margin-bottom: 10px;
+  }
+
+  .actual__theme:last-child {
+    margin-bottom: 0;
+  }
+
+  .actual__theme-destination {
+    display: flex;
+    align-items: center;
+  }
+
+  .actual__theme-destination img {
+    width: 11px;
+    height: 11px;
+    margin-right: 5px;
+  }
+
+  .actual__theme-description {
+    display: flex;
+  }
+
+  .actual h3 {
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 32px;
+    color: #1d1e22;
+    margin-bottom: 10px;
+  }
+
+  .actual h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1d1e22;
+    margin-bottom: 3px;
+  }
+
+  .actual h5 {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 16px;
+    color: #0057ff;
+    margin-right: 10px;
+  }
+
+  .actual p {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 16px;
+    color: #abacb1;
+  }
+}

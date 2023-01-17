@@ -1,0 +1,58 @@
+@media screen and (min-width: 992px) {
+  .bloggers h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 32px;
+    color: #1d1e22;
+  }
+
+  .blogger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .blogger:last-child {
+    margin-bottom: 0;
+  }
+
+  .blogger__left {
+    display: flex;
+    align-items: center;
+  }
+
+  .blogger img {
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+  }
+
+  .blogger__title h4 {
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .blogger__title p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #abacb1;
+  }
+
+  .blogger > .btn {
+    padding: 5px;
+    font-size: 10px;
+    line-height: 14px;
+    max-width: 70px;
+    max-height: 25px;
+    margin-bottom: 0;
+    border-radius: 5px;
+  }
+
+  .blogger h4 {
+    font-size: 16px;
+    line-height: 18px;
+    color: #1d1e22;
+  }
+}
