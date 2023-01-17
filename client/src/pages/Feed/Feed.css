@@ -77,10 +77,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
-.last-messages__box-statistic img {
-  margin-right: 12px;
+.last-messages__box-statistic svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.active-icon svg {
+  color: #0057ff;
+}
+
+.active-icon p {
+  color: #0057ff;
 }
 
 .last-messages__box-statistic-title {

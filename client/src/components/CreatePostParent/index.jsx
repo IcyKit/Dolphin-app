@@ -39,6 +39,7 @@ const CreatePostParent = () => {
         length={length}
         createPost={createPost}
         onTextInput={onTextInput}
+        setImg={setImg}
       />
       <CreatePostMobile
         isLoading={isLoading}
@@ -46,6 +47,7 @@ const CreatePostParent = () => {
         length={length}
         createPost={createPost}
         onTextInput={onTextInput}
+        setImg={setImg}
       />
     </>
   );
