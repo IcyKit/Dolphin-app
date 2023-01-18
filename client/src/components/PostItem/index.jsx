@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsReply } from "react-icons/bs";
+import { FiShare } from "react-icons/fi";
+
 const PostItem = ({
   avatarUrl,
   name,
@@ -9,6 +14,8 @@ const PostItem = ({
   forward,
   attachment,
 }) => {
+  const [isLike, setIsLike] = useState(false);
+
   const makeSentence = (number, words) => {
     number = Math.abs(number) % 100;
     let n1 = number % 10;
@@ -23,7 +30,6 @@ const PostItem = ({
     }
     return `${number} ${words[2]} назад`;
   };
-
   const getTimeOfMessage = (time) => {
     const timeElapsed = new Date() - new Date(time);
     console.log(timeElapsed);
@@ -65,15 +71,22 @@ const PostItem = ({
           </div>
           <div class="last-messages__box-statistics">
             <div class="last-messages__box-statistic">
-              <img src="/reply.png" alt="Reply" />
+              {/* <img src="/reply.png" alt="Reply" /> */}
+              <BsReply />
               <p class="last-messages__box-statistic-title">{replies}</p>
             </div>
-            <div class="last-messages__box-statistic">
-              <img src="/like.png" alt="Like" />
+            <div
+              className={`last-messages__box-statistic ${isLike ? "active-icon" : ""
+                }`}
+              onClick={() => setIsLike(!isLike)}
+            >
+              {/* <img src="/like.png" alt="Like" /> */}
+              <AiOutlineHeart />
               <p class="last-messages__box-statistic-title">{likes}</p>
             </div>
             <div class="last-messages__box-statistic">
-              <img src="/forward.png" alt="Forward" />
+              {/* <img src="/forward.png" alt="Forward" /> */}
+              <FiShare />
               <p class="last-messages__box-statistic-title">{forward}</p>
             </div>
           </div>

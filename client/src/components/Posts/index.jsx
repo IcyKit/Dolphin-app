@@ -1,17 +1,15 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PostItem from "../PostItem";
 import "./Posts.css";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPosts } from "../../store/slices/posts";
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-  const fetchPosts = async () => {
-    const { data } = await axios.get("http://localhost:3001/posts");
-    setPosts(data);
-  };
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
-    fetchPosts();
+    dispatch(fetchPosts());
   }, []);
 
   return (

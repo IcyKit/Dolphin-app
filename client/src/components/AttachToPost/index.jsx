@@ -1,6 +1,6 @@
 import { Widget } from "@uploadcare/react-widget";
 
-const AttachToPost = () => {
+const AttachToPost = ({ setImg }) => {
   return (
     <div className="post-popup-attach">
       <Widget

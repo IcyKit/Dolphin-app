@@ -9,6 +9,7 @@ const CreatePostMobile = ({
   length,
   createPost,
   onTextInput,
+  setImg,
 }) => {
   return (
     <section className="post-popup-mobile">
@@ -23,11 +24,11 @@ const CreatePostMobile = ({
             <TextArea onTextInput={onTextInput} text={text} />
           </div>
           <div className="post-popup-footer">
-            <AttachToPost />
+            <AttachToPost setImg={setImg} />
 
             <TextAreaCircular length={length} />
             <div className="post-popup-send">
-              <button onClick={createPost} className="btn btn-active">
+              <button onClick={() => createPost()} className="btn btn-active">
                 Отправить
               </button>
             </div>

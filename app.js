@@ -37,7 +37,8 @@ app.get("/posts", async (req, res) => {
 
 // Создание поста
 app.post("/posts", jsonParser, async (req, res) => {
-  const { content, token, attachment } = req.body;
+  const { content, attachment } = req.body;
+  const token = req.cookies.token;
   const user_id = await getUserID(token);
   if (!user_id) {
     return res.status(401).json({ message: "Пользователь не авторизован" });

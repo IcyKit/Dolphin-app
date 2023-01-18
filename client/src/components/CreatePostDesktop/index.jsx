@@ -9,12 +9,13 @@ const CreatePostDesktop = ({
   isLoading,
   createPost,
   onTextInput,
+  setImg,
 }) => {
   return (
     <section className="post-popup-desktop">
       <TextArea onTextInput={onTextInput} text={text} />
       <div className="post-popup-desktop-footer">
-        <AttachToPost />
+        <AttachToPost setImg={setImg} />
         {/* <p className="post-popup-attach-name">{img.name}</p> */}
         <div className="post-popup-footer-right">
           <TextAreaCircular length={length} />
