@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "../public",
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "feed.html"),
+        main: resolve(__dirname, "index.html"),
       },
     },
   },
