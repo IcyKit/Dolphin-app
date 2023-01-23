@@ -7,7 +7,11 @@ export default defineConfig({
     outDir: "../public",
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
+        // main: resolve(__dirname, "index.html"),
+        index: "src/main.jsx",
+      },
+      output: {
+        name: "feed.html",
       },
     },
   },
