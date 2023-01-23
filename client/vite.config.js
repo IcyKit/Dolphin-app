@@ -7,14 +7,13 @@ export default defineConfig({
     outDir: "../public",
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "feed.html"),
+        main: resolve(__dirname, "index.html"),
       },
     },
   },
   server: {
     proxy: {
       "/posts": "http://localhost:3001",
-      "/feed": "http://localhost:3001",
     },
   },
   plugins: [react()],
