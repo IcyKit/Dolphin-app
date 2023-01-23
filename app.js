@@ -27,6 +27,7 @@ const port = process.env.PORT || 3001;
 const jsonParser = bodyParser.json();
 app.use(cors());
 app.use(express.static("public"));
+app.use(express.static("dist"));
 app.use(cookieParser());
 
 // Получение постов
