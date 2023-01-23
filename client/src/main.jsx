@@ -6,15 +6,20 @@ import { store } from "./store/store";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./pages/Feed";
+import Settings from "./pages/Settings";
 
 const router = createBrowserRouter([
   {
-    path: "/feed",
+    path: "/app",
     element: <App />,
     children: [
       {
-        path: "/feed",
+        path: "/app",
         element: <Feed />,
+      },
+      {
+        path: "/app/settings",
+        element: <Settings />,
       },
     ],
   },

@@ -4,15 +4,9 @@ import { resolve } from "path";
 
 export default defineConfig({
   build: {
-    outDir: "../public",
+    outDir: "../dist",
     rollupOptions: {
-      input: {
-        // main: resolve(__dirname, "index.html"),
-        index: "src/main.jsx",
-      },
-      output: {
-        name: "feed.html",
-      },
+      input: "./index.html",
     },
   },
   server: {
