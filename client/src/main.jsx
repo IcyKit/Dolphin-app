@@ -9,11 +9,11 @@ import Feed from "./pages/Feed";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/app",
     element: <App />,
     children: [
       {
-        path: "/feed",
+        path: "/app/feed",
         element: <Feed />,
       },
     ],
