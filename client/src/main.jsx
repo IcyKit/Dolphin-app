@@ -9,7 +9,7 @@ import Feed from "./pages/Feed";
 
 const router = createBrowserRouter([
   {
-    path: "/app",
+    path: "/",
     element: <App />,
     // children: [
     //   {
@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      {/*<App />*/}
     </Provider>
   </React.StrictMode>
 );

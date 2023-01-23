@@ -9,9 +9,7 @@ import validateAuthModal from "./modules/validateAuthModal.js";
 document.addEventListener("DOMContentLoaded", () => {
   // Проверка на существование сессии
   const token = document.cookie.split("=")[1];
-  if (token) {
-    window.location.href = "/app";
-  }
+
   const registrationPopup = document.querySelector("#register_popup");
   const registrationBtn = document.querySelector("#register_btn");
   // Открытие окна регистрации
@@ -30,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const authBtn = document.querySelector("#auth_btn");
   // Открытие окна авторизации
   authBtn.addEventListener("click", () => {
+    if (token) {
+      window.location.href = "/app";
+    }
     authPopup.classList.remove("hide");
     document.body.style.overflow = "hidden";
   });
