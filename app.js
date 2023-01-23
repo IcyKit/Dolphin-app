@@ -126,12 +126,6 @@ app.get("/feed.json", jsonParser, checkToken, async (req, res) => {
   return res.status(200).json({ message: "Пользователь успешно авторизован" });
 });
 
-app.get("/feed", jsonParser, checkToken, async (req, res) => {
-  return res
-    .status(200)
-    .json({ message: "Пользователь на странице с постами" });
-});
-
 // Главная страница
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
