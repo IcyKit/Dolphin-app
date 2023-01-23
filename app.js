@@ -128,7 +128,11 @@ app.get("/feed.json", jsonParser, checkToken, async (req, res) => {
 
 // Главная страница
 app.get("/", async (req, res) => {
-  res.sendFile(__dirname + "/public/landing.html");
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+app.get("/app", (req, res) => {
+  res.sendFile(__dirname + "/dist/index.html");
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
