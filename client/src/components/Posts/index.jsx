@@ -1,16 +1,9 @@
-import { useEffect } from "react";
-import PostItem from "../PostItem";
-import "./Posts.css";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchPosts } from "../../store/slices/posts";
+import PostItem from '../PostItem';
+import './Posts.css';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Posts = () => {
-  const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
 
   return (
     <div class="last-messages__content card-shadow">

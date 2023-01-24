@@ -20,6 +20,7 @@ const {
   getUserID,
   getUserByToken,
   updateUserInfo,
+  client,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -42,7 +43,7 @@ app.get('/me', async (req, res) => {
 // Обновление пользователя
 app.post('/me', async (req, res) => {
   const token = req.cookies.token;
-  const { userData } = req.body;
+  const userData = req.body;
   console.log(userData);
   // await updateUserInfo(token, userData);
 });
@@ -149,8 +150,11 @@ app.get('/', async (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/app', (req, res) => {
+app.get('/app', checkToken, (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => {
+  console.log(`App listening on port ${port}!`);
+  client.connect();
+});

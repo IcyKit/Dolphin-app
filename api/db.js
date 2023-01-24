@@ -11,30 +11,23 @@ const makeNewClient = () => {
   });
 };
 
+const client = makeNewClient();
+
 const getPosts = async () => {
-  const client = makeNewClient();
-  client.connect();
   const res = await client.query(
     'SELECT name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC'
   );
-  client.end();
   return res.rows;
 };
 
 const createPost = async (user_id, content, attachment, date) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `INSERT INTO posts (user_id, content, postdate, attachment) VALUES (${user_id}, '${content}', '${date}', '${attachment}')`;
   await client.query(queryString);
-  client.end();
 };
 
 const getUserID = async (token) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT user_id FROM sessions WHERE token = '${token}'`;
   const user_id = await client.query(queryString);
-  client.end();
   if (!user_id.rows[0]) {
     console.log('Юзера нет');
     return false;
@@ -43,64 +36,43 @@ const getUserID = async (token) => {
 };
 
 const updateUserInfo = async (token, userData) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = ${userData.birthday} WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
   await client.query(queryString);
-  client.end();
 };
 
 const deletePost = async (post_id) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `DELETE FROM posts WHERE post_id = ${post_id}`;
   await client.query(queryString);
-  client.end();
 };
 
 const updatePost = async (post_id, content) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `UPDATE posts SET content = '${content}' WHERE post_id = ${post_id}`;
   await client.query(queryString);
-  client.end();
 };
 
 const createUser = async (nickname, password, email) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `INSERT INTO users (nickname, password, name, email) VALUES ('${nickname}', '${password}', '${nickname}', '${email}')`;
   await client.query(queryString);
-  client.end();
 };
 
 const checkUser = async (nickname) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT EXISTS (SELECT * FROM users WHERE nickname = '${nickname}')`;
   const result = await client.query(queryString);
   const isUser = result.rows[0].exists;
-  client.end();
   return isUser;
 };
 
 const checkEmail = async (email) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT EXISTS (SELECT * FROM users WHERE email = '${email}')`;
   const result = await client.query(queryString);
   const isEmail = result.rows[0].exists;
-  client.end();
   return isEmail;
 };
 
 const loginUser = async (nicknameOrEmail, password) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT EXISTS (SELECT * FROM users WHERE (nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}') AND password = '${password}')`;
   const result = await client.query(queryString);
   const isUser = result.rows[0].exists;
-  client.end();
   return isUser;
 };
 
@@ -115,11 +87,8 @@ const login = async (nickname, token) => {
   );
   dateNow = dateNow.toISOString();
   sevenDaysBefore = sevenDaysBefore.toISOString();
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT token FROM sessions AS s INNER JOIN users AS u ON s.user_id = u.id WHERE nickname = '${nickname}' AND token = '${token}' AND (created_at BETWEEN '${sevenDaysBefore}' AND '${dateNow}')`;
   const result = await client.query(queryString);
-  client.end();
   if (!result.rows[0] || result.rows[0].token !== token) {
     return false;
   }
@@ -127,11 +96,8 @@ const login = async (nickname, token) => {
 };
 
 const getHashedPassword = async (nicknameOrEmail) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
   const result = await client.query(queryString);
-  client.end();
   if (result.rows[0]) {
     return result.rows[0].password;
   } else {
@@ -140,27 +106,19 @@ const getHashedPassword = async (nicknameOrEmail) => {
 };
 
 const generateSession = async (token, nickname, date) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `INSERT INTO sessions (token, user_id, created_at) VALUES ('${token}', (SELECT id FROM users WHERE nickname = '${nickname}'), '${date}')`;
   await client.query(queryString);
-  client.end();
 };
 
 const updateSession = async (token, nicknameOrEmail, date) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `UPDATE sessions SET token = '${token}', created_at = '${date}' WHERE user_id = (SELECT id FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}')`;
   await client.query(queryString);
-  client.end();
+  // client.end();
 };
 
 const getUserByToken = async (token) => {
-  const client = makeNewClient();
-  client.connect();
   const queryString = `SELECT * FROM users WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
   const userData = await client.query(queryString);
-  client.end();
   return userData.rows[0];
 };
 
@@ -180,4 +138,5 @@ module.exports = {
   getUserID,
   getUserByToken,
   updateUserInfo,
+  client,
 };

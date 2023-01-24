@@ -39,9 +39,7 @@ const Settings = () => {
       website: websiteForm,
       birthday: birthdayForm,
     };
-    await axios.post('/me', {
-      userData,
-    });
+    await axios.post('/me', userData);
   };
 
   return (
