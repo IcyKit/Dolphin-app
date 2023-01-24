@@ -1,8 +1,11 @@
 import "./Header.css";
 import HeaderItem from "../HeaderItem";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { avatarphoto } = useSelector((state) => state.user.userData);
+
   return (
     <header>
       <div class="header--flexed">
@@ -13,7 +16,7 @@ const Header = () => {
         </div>
         <div class="header-avatar">
           <Link to="/app/settings">
-            <img src="/trump.png" alt="" class="header-avatar-img" />
+            <img src={avatarphoto} alt="" class="header-avatar-img" />
           </Link>
         </div>
       </div>

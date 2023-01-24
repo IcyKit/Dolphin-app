@@ -147,6 +147,15 @@ const updateSession = async (token, nicknameOrEmail, date) => {
   client.end();
 };
 
+const getUserByToken = async (token) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `SELECT * FROM users WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const userData = await client.query(queryString);
+  client.end();
+  return userData.rows[0];
+};
+
 module.exports = {
   getPosts,
   createPost,
@@ -161,4 +170,5 @@ module.exports = {
   updateSession,
   login,
   getUserID,
+  getUserByToken,
 };

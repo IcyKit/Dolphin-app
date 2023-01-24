@@ -1,13 +1,17 @@
 import "./ProfileInfo.css";
+import { useSelector } from "react-redux";
 
 const ProfileInfo = () => {
+  const { avatarphoto, name, nickname } = useSelector(
+    (state) => state.user.userData
+  );
   return (
     <div class="profile-info aside__card card-shadow">
       <div class="profile-info__header">
-        <img src="/trump.png" alt="avatar" />
+        <img src={avatarphoto} alt="avatar" />
         <div class="profile-info__header-title">
-          <h2>Donald</h2>
-          <p>@donaldjtrump</p>
+          <h2>{name}</h2>
+          <p>@{nickname}</p>
         </div>
       </div>
       <div class="profile-info__statistics">

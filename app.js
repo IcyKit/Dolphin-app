@@ -18,6 +18,7 @@ const {
   updateSession,
   login,
   getUserID,
+  getUserByToken,
 } = require("./api/db.js");
 const { checkToken } = require("./middlewares/checkToken.js");
 const { checkLogin } = require("./middlewares/checkLogin.js");
@@ -29,6 +30,12 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.static("dist"));
 app.use(cookieParser());
+
+app.get("/me", async (req, res) => {
+  const token = req.cookies.token;
+  const userData = await getUserByToken(token);
+  res.json(userData);
+});
 
 // Получение постов
 app.get("/posts", async (req, res) => {

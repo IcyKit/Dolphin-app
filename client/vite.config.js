@@ -12,6 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/posts": "http://localhost:3001",
+      "/me": "http://localhost:3001",
     },
   },
   plugins: [react()],

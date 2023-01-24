@@ -108,7 +108,7 @@ const validateRegisterModal = async (registrationPopup) => {
       el.classList.add("auth-error");
     } else {
       el.classList.add("auth-success");
-      window.location.href = "/index.html";
+      window.location.href = "/app";
     }
     el.innerHTML = resultData.message;
     const form = document.querySelector(".sign-up__form");
