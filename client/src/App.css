@@ -16,10 +16,17 @@
   text-align: center;
 }
 
+.btn-active {
+  background-color: #0057ff;
+  color: #fff;
+}
+
+
 .btn-disabled {
-  background-color: #e0e0e0 !important;
+  background-color: #ebebeb !important;
   border: none;
-  color: gray !important;
+  color: #adadad !important;
+  cursor: default;
 }
 
 .uploadcare--widget__button {

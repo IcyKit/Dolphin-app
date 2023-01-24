@@ -64,7 +64,7 @@ const validateAuthModal = async (authPopup) => {
       const form = document.querySelector(".sign-in__form");
       form.append(el);
     } else {
-      window.location.href = "/feed.html";
+      window.location.href = "/app";
     }
     spinner.classList.remove("spinner-show");
     spinner.classList.add("spinner-hide");

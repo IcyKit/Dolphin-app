@@ -1,7 +1,11 @@
 import "./Header.css";
 import HeaderItem from "../HeaderItem";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { avatarphoto } = useSelector((state) => state.user.userData);
+
   return (
     <header>
       <div class="header--flexed">
@@ -11,7 +15,9 @@ const Header = () => {
           <HeaderItem title="Cообщения" icon="/message.png" isActive={false} />
         </div>
         <div class="header-avatar">
-          <img src="/trump.png" alt="" class="header-avatar-img" />
+          <Link to="/app/settings">
+            <img src={avatarphoto} alt="" class="header-avatar-img" />
+          </Link>
         </div>
       </div>
       <svg
