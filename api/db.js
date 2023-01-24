@@ -1,7 +1,7 @@
-const { Client } = require("pg");
+const { Client } = require('pg');
 
 const connectionString =
-  "postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development";
+  'postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development';
 const makeNewClient = () => {
   return new Client({
     connectionString,
@@ -15,7 +15,7 @@ const getPosts = async () => {
   const client = makeNewClient();
   client.connect();
   const res = await client.query(
-    "SELECT name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC"
+    'SELECT name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC'
   );
   client.end();
   return res.rows;
@@ -36,10 +36,18 @@ const getUserID = async (token) => {
   const user_id = await client.query(queryString);
   client.end();
   if (!user_id.rows[0]) {
-    console.log("Юзера нет");
+    console.log('Юзера нет');
     return false;
   }
   return user_id.rows[0].user_id;
+};
+
+const updateUserInfo = async (token, userData) => {
+  const client = makeNewClient();
+  client.connect();
+  const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = ${userData.birthday} WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  await client.query(queryString);
+  client.end();
 };
 
 const deletePost = async (post_id) => {
@@ -171,4 +179,5 @@ module.exports = {
   login,
   getUserID,
   getUserByToken,
+  updateUserInfo,
 };

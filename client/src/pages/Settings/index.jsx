@@ -1,17 +1,48 @@
 import './Settings.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import axios from 'axios';
 const Settings = () => {
-  const { avatarphoto, nickname, name, description, website, location } =
-    useSelector((state) => state.user.userData);
-  // const [name, setName] = useState('');
-  // const [nickname, setNickname] = useState('');
-  // const [about, setAbout] = useState('');
-  // const [location, setLocation] = useState('');
-  // const [website, setWebsite] = useState('');
-  // const [birthday, setBirthday] = useState(new Date());
-  // const [showBirthday, setShowBirthday] = useState(false);
+  const {
+    avatarphoto,
+    nickname,
+    name,
+    description,
+    website,
+    location,
+    birthday,
+  } = useSelector((state) => state.user.userData);
+
+  useEffect(() => {
+    setNameForm(name);
+    setNicknameForm(nickname);
+    setDescriptionForm(description);
+    setWebsiteForm(website);
+    setLocationForm(location);
+    setBirthdayForm(birthday);
+  }, [avatarphoto, nickname, name, description, website, location, birthday]);
+
+  const [nameForm, setNameForm] = useState(name);
+  const [nicknameForm, setNicknameForm] = useState(nickname);
+  const [descriptionForm, setDescriptionForm] = useState(description || '');
+  const [locationForm, setLocationForm] = useState(location || '');
+  const [websiteForm, setWebsiteForm] = useState(website || '');
+  const [birthdayForm, setBirthdayForm] = useState(birthday || new Date());
+  const [showBirthdayForm, setShowBirthdayForm] = useState(false);
+
+  const handleSubmit = async () => {
+    const userData = {
+      name: nameForm,
+      nickname: nicknameForm,
+      description: descriptionForm,
+      location: locationForm,
+      website: websiteForm,
+      birthday: birthdayForm,
+    };
+    await axios.post('/me', {
+      userData,
+    });
+  };
 
   return (
     <div className="container">
@@ -28,11 +59,23 @@ const Settings = () => {
                   <div className="nick">
                     <div className="input-box">
                       <label htmlFor="name">Ваше имя</label>
-                      <input id="name" type="text" placeholder={name} />
+                      <input
+                        id="name"
+                        type="text"
+                        placeholder={name}
+                        value={nameForm}
+                        onChange={(e) => setNameForm(e.target.value)}
+                      />
                     </div>
                     <div className="input-box">
                       <label htmlFor="nickname">Никнейм</label>
-                      <input id="nickname" type="text" placeholder={nickname} />
+                      <input
+                        id="nickname"
+                        type="text"
+                        placeholder={nickname}
+                        value={nicknameForm}
+                        onChange={(e) => setNicknameForm(e.target.value)}
+                      />
                       {/* <p>К сожалению, этот никнейм занят</p> */}
                     </div>
                   </div>
@@ -45,33 +88,61 @@ const Settings = () => {
                     cols="30"
                     rows="10"
                     placeholder={description}
+                    value={descriptionForm}
+                    onChange={(e) => setDescriptionForm(e.target.value)}
                   ></textarea>
                 </div>
                 <div className="input-box">
                   <label htmlFor="geo">Геолокация</label>
-                  <input id="geo" type="text" placeholder={location} />
+                  <input
+                    id="geo"
+                    type="text"
+                    placeholder={location}
+                    value={locationForm}
+                    onChange={(e) => setLocationForm(e.target.value)}
+                  />
                 </div>
                 <div className="input-box">
                   <label htmlFor="web">Веб-сайт</label>
-                  <input id="web" type="url" placeholder={website} />
+                  <input
+                    id="web"
+                    type="url"
+                    placeholder={website}
+                    value={websiteForm}
+                    onChange={(e) => setWebsiteForm(e.target.value)}
+                  />
                 </div>
                 <div className="birthday">
                   <div className="birthday-left input-box">
                     <label htmlFor="birthday-date">Дата рождения</label>
-                    <input htmlFor="birthday-date" type="date" />
+                    <input
+                      htmlFor="birthday-date"
+                      type="date"
+                      value={birthdayForm}
+                      onChange={(e) => setBirthdayForm(e.target.value)}
+                    />
                   </div>
                   <div className="birthday-right input-box">
                     <label htmlFor="show-birthday">
                       Показывать дату рождения
                     </label>
-                    <select name="show-birthday" id="show-birthday">
+                    <select
+                      name="show-birthday"
+                      id="show-birthday"
+                      value={birthday}
+                    >
                       <option value="show-all">Показывать всем</option>
                       <option value="show-friends">Показывать друзьям</option>
                       <option value="show-nobody">Никому не показывать</option>
                     </select>
                   </div>
                 </div>
-                <button className="btn btn-active">Сохранить</button>
+                <button
+                  className="btn btn-active"
+                  onClick={() => handleSubmit()}
+                >
+                  Сохранить
+                </button>
               </div>
             </div>
             <div className="right-side card-shadow aside__card">

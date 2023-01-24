@@ -1,18 +1,29 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
-  const { data } = await axios.get("/me");
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+  const { data } = await axios.get('/me');
   console.log(data);
   return data;
 });
+
+export const fetchUpdateUser = createAsyncThunk(
+  'user/fetchUpdateUser',
+  async ({ userData }) => {
+    await axios.post('/me', {
+      userData,
+    });
+    const { data } = await axios.get('/me');
+    return data;
+  }
+);
 
 const initialState = {
   userData: {},
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
