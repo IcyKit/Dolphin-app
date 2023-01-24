@@ -16,6 +16,12 @@
   text-align: center;
 }
 
+.btn-active {
+  background-color: #0057ff;
+  color: #fff;
+}
+
+
 .btn-disabled {
   background-color: #ebebeb !important;
   border: none;
