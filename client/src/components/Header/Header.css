@@ -38,7 +38,12 @@ header path {
   .header--flexed {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
+  }
+
+  .default-avatar path {
+    fill: #fff;
   }
 
   .header-avatar {

@@ -1,6 +1,6 @@
 import PostItem from '../PostItem';
 import './Posts.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Posts = () => {
   const posts = useSelector((state) => state.posts.posts);

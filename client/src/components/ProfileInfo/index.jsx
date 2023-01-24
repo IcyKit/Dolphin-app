@@ -1,5 +1,5 @@
-import "./ProfileInfo.css";
-import { useSelector } from "react-redux";
+import './ProfileInfo.css';
+import { useSelector } from 'react-redux';
 
 const ProfileInfo = () => {
   const { avatarphoto, name, nickname } = useSelector(
@@ -8,7 +8,10 @@ const ProfileInfo = () => {
   return (
     <div class="profile-info aside__card card-shadow">
       <div class="profile-info__header">
-        <img src={avatarphoto} alt="avatar" />
+        <img
+          src={avatarphoto ? avatarphoto : '/default-avatar.png'}
+          alt="avatar"
+        />
         <div class="profile-info__header-title">
           <h2>{name}</h2>
           <p>@{nickname}</p>

@@ -36,8 +36,18 @@ const getUserID = async (token) => {
 };
 
 const updateUserInfo = async (token, userData) => {
-  const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = ${userData.birthday} WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
-  await client.query(queryString);
+  const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = '${userData.birthday}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const response = await client.query(queryString);
+  if (!response.rowCount) {
+    return false;
+  }
+  return true;
+};
+
+const updateUserAvatar = async (token, url) => {
+  const queryString = `UPDATE users SET avatarphoto = '${url}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const response = await client.query(queryString);
+  return response;
 };
 
 const deletePost = async (post_id) => {
@@ -51,7 +61,7 @@ const updatePost = async (post_id, content) => {
 };
 
 const createUser = async (nickname, password, email) => {
-  const queryString = `INSERT INTO users (nickname, password, name, email) VALUES ('${nickname}', '${password}', '${nickname}', '${email}')`;
+  const queryString = `INSERT INTO users (nickname, password, name, email, avatarphoto) VALUES ('${nickname}', '${password}', '${nickname}', '${email}', '/default-avatar.png')`;
   await client.query(queryString);
 };
 
@@ -139,4 +149,5 @@ module.exports = {
   getUserByToken,
   updateUserInfo,
   client,
+  updateUserAvatar,
 };

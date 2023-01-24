@@ -21,6 +21,7 @@ const {
   getUserByToken,
   updateUserInfo,
   client,
+  updateUserAvatar,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -41,11 +42,26 @@ app.get('/me', async (req, res) => {
 });
 
 // Обновление пользователя
-app.post('/me', async (req, res) => {
+app.post('/me', jsonParser, async (req, res) => {
   const token = req.cookies.token;
   const userData = req.body;
-  console.log(userData);
-  // await updateUserInfo(token, userData);
+  const response = await updateUserInfo(token, userData);
+  if (!response) {
+    res.json({ message: 'Ошибка обновления профиля', status: 'error' });
+  }
+  res.json({ message: 'Профиль успешно обновлен', status: 'success' });
+});
+
+app.post('/me/avatar', jsonParser, async (req, res) => {
+  const token = req.cookies.token;
+  const { url } = req.body;
+  console.log(url);
+  res.json({ url });
+  // const response = await updateUserAvatar(token, url);
+  // if (!response) {
+  //   res.json({ message: 'Ошибка обновления аватара', status: 'error' });
+  // }
+  // res.json({ message: 'Аватар успешно обновлен', status: 'success' });
 });
 
 // Получение постов
@@ -150,7 +166,7 @@ app.get('/', async (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/app', checkToken, (req, res) => {
+app.get('/app', checkToken, async (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 

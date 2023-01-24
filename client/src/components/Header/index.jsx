@@ -2,9 +2,10 @@ import './Header.css';
 import HeaderItem from '../HeaderItem';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Avatar } from '@mui/material';
 
 const Header = () => {
-  const { avatarphoto } = useSelector((state) => state.user.userData);
+  const { avatarphoto, name } = useSelector((state) => state.user.userData);
 
   return (
     <header>
@@ -18,7 +19,11 @@ const Header = () => {
         </div>
         <div class="header-avatar">
           <Link to="/app/settings">
-            <img src={avatarphoto} alt="" class="header-avatar-img" />
+            <img
+              src={avatarphoto ? avatarphoto : '/default-avatar.png'}
+              alt=""
+              class="header-avatar-img"
+            />
           </Link>
         </div>
       </div>

@@ -1,8 +1,12 @@
 import './Settings.css';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { Alert, CircularProgress } from '@mui/material';
+import { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUpdateUser } from '../../store/slices/user';
+import AttachToPost from '../../components/AttachToPost';
+
 const Settings = () => {
+  const dispatch = useDispatch();
   const {
     avatarphoto,
     nickname,
@@ -12,6 +16,11 @@ const Settings = () => {
     location,
     birthday,
   } = useSelector((state) => state.user.userData);
+  const { isSettingLoading, status } = useSelector(
+    (state) => state.user.settings
+  );
+
+  const avatarChange = useRef();
 
   useEffect(() => {
     setNameForm(name);
@@ -29,6 +38,12 @@ const Settings = () => {
   const [websiteForm, setWebsiteForm] = useState(website || '');
   const [birthdayForm, setBirthdayForm] = useState(birthday || new Date());
   const [showBirthdayForm, setShowBirthdayForm] = useState(false);
+  const [isModal, setIsModal] = useState(status.status);
+  const [mouseEvent, setMouseEvent] = useState(false);
+
+  useEffect(() => {
+    setIsModal(status.status);
+  }, [status]);
 
   const handleSubmit = async () => {
     const userData = {
@@ -37,14 +52,19 @@ const Settings = () => {
       description: descriptionForm,
       location: locationForm,
       website: websiteForm,
-      birthday: birthdayForm,
+      birthday: new Date(birthdayForm),
     };
-    await axios.post('/me', userData);
+    dispatch(fetchUpdateUser(userData));
   };
 
   return (
     <div className="container">
       <div className="main__box main__box-settings">
+        {isModal && (
+          <Alert severity={status?.status} onClose={() => setIsModal(false)}>
+            {status?.message}
+          </Alert>
+        )}
         <section className="last-messages">
           <h1>Редактировать профиль</h1>
           <div className="settings-main">
@@ -52,7 +72,21 @@ const Settings = () => {
               <div className="settings card-shadow">
                 <div className="nick-and-photo">
                   <div className="photo">
-                    <img src={avatarphoto} alt="" />
+                    <img
+                      src={avatarphoto}
+                      className="photo-avatar"
+                      alt=""
+                      onMouseEnter={() => setMouseEvent(true)}
+                    />
+                    {mouseEvent && (
+                      // <div className="upload-avatar">
+                      //   <img
+                      //     src={'/change-avatar.png'}
+                      //     onMouseOut={() => setMouseEvent(false)}
+                      //   />
+                      // </div>
+                      <AttachToPost />
+                    )}
                   </div>
                   <div className="nick">
                     <div className="input-box">
@@ -135,12 +169,15 @@ const Settings = () => {
                     </select>
                   </div>
                 </div>
-                <button
-                  className="btn btn-active"
-                  onClick={() => handleSubmit()}
-                >
-                  Сохранить
-                </button>
+                <div className="settings-button">
+                  <button
+                    className="btn btn-active"
+                    onClick={() => handleSubmit()}
+                  >
+                    Сохранить
+                  </button>
+                  {isSettingLoading && <CircularProgress />}
+                </div>
               </div>
             </div>
             <div className="right-side card-shadow aside__card">
