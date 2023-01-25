@@ -35,8 +35,14 @@ const getUserID = async (token) => {
   return user_id.rows[0].user_id;
 };
 
+const checkUserNickname = async (nickname) => {
+  const queryString = `SELECT EXISTS (SELECT * FROM users WHERE nickname = '${nickname}')`;
+  const response = await client.query(queryString);
+  return response.rows[0].exists;
+};
+
 const updateUserInfo = async (token, userData) => {
-  const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = '${userData.birthday}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.nickname}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = '${userData.birthday}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
   const response = await client.query(queryString);
   if (!response.rowCount) {
     return false;
@@ -63,6 +69,15 @@ const updatePost = async (post_id, content) => {
 const createUser = async (nickname, password, email) => {
   const queryString = `INSERT INTO users (nickname, password, name, email, avatarphoto) VALUES ('${nickname}', '${password}', '${nickname}', '${email}', '/default-avatar.png')`;
   await client.query(queryString);
+};
+
+const updatePassword = async (token, password) => {
+  const queryString = `UPDATE users SET password = '${password}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const result = await client.query(queryString);
+  if (!result) {
+    return false;
+  }
+  return true;
 };
 
 const checkUser = async (nickname) => {
@@ -105,8 +120,8 @@ const login = async (nickname, token) => {
   return true;
 };
 
-const getHashedPassword = async (nicknameOrEmail) => {
-  const queryString = `SELECT password FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}'`;
+const getHashedPassword = async (value) => {
+  const queryString = `SELECT password FROM users WHERE nickname = '${value}' OR email = '${value}' or id = (SELECT user_id FROM sessions WHERE token = '${value}')`;
   const result = await client.query(queryString);
   if (result.rows[0]) {
     return result.rows[0].password;
@@ -150,4 +165,6 @@ module.exports = {
   updateUserInfo,
   client,
   updateUserAvatar,
+  checkUserNickname,
+  updatePassword,
 };

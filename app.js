@@ -22,6 +22,8 @@ const {
   updateUserInfo,
   client,
   updateUserAvatar,
+  checkUserNickname,
+  updatePassword,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -45,23 +47,47 @@ app.get('/me', async (req, res) => {
 app.post('/me', jsonParser, async (req, res) => {
   const token = req.cookies.token;
   const userData = req.body;
+  const checkNickname = await checkUserNickname(userData.nickname);
+  if (checkNickname) {
+    return res.json({
+      message: 'Пользователь с таким никнеймом уже существует',
+      status: 'nicknameError',
+    });
+  }
   const response = await updateUserInfo(token, userData);
   if (!response) {
-    res.json({ message: 'Ошибка обновления профиля', status: 'error' });
+    return res.json({ message: 'Ошибка обновления профиля', status: 'error' });
   }
-  res.json({ message: 'Профиль успешно обновлен', status: 'success' });
+  return res.json({ message: 'Профиль успешно обновлен', status: 'success' });
 });
 
 app.post('/me/avatar', jsonParser, async (req, res) => {
   const token = req.cookies.token;
   const { url } = req.body;
-  console.log(url);
-  res.json({ url });
-  // const response = await updateUserAvatar(token, url);
-  // if (!response) {
-  //   res.json({ message: 'Ошибка обновления аватара', status: 'error' });
-  // }
-  // res.json({ message: 'Аватар успешно обновлен', status: 'success' });
+  const response = await updateUserAvatar(token, url);
+  if (!response) {
+    res.json({ message: 'Ошибка обновления аватара', status: 'error' });
+  }
+  res.json({ message: 'Аватар успешно обновлен', status: 'success' });
+});
+
+app.post('/me/password', jsonParser, async (req, res) => {
+  const token = req.cookies.token;
+  const { newPassword, oldPassword } = req.body;
+  const oldPasswordHashed = await getHashedPassword(token);
+  const comparedPasswords = await bcrypt.compare(
+    oldPassword,
+    oldPasswordHashed
+  );
+  if (!comparedPasswords) {
+    return res.json({
+      message: 'Текущий пароль неверный',
+      status: 'oldPasswordError',
+    });
+  }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await updatePassword(token, hashedPassword);
+  return res.json({ message: 'Пароль успешно изменен', status: 'success' });
 });
 
 // Получение постов

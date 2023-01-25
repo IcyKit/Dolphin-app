@@ -21,6 +21,13 @@
   color: #fff;
 }
 
+.error-modal {
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 .btn-disabled {
   background-color: #ebebeb !important;

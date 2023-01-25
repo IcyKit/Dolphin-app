@@ -16,8 +16,22 @@ export const fetchUpdateUser = createAsyncThunk(
 
 export const fetchUploadAvatar = createAsyncThunk(
   'user/fetchUploadAvatar',
-  async ({ url }) => {
-    const { data } = await axios.post('/me/avatar', { url });
+  async (url) => {
+    if (url) {
+      const { data } = await axios.post('/me/avatar', { url });
+      return data;
+    }
+  }
+);
+
+export const fetchUpdateUserPassword = createAsyncThunk(
+  'user/updateUserPassword',
+  async ({ newPassword, oldPassword }) => {
+    const { data } = await axios.post('/me/password', {
+      newPassword,
+      oldPassword,
+    });
+    return data;
   }
 );
 
@@ -27,6 +41,8 @@ const initialState = {
   settings: {
     isSettingLoading: false,
     status: {},
+    nicknameError: false,
+    oldPasswordError: false,
   },
 };
 
@@ -51,11 +67,35 @@ export const userSlice = createSlice({
       state.settings.isSettingLoading = true;
     });
     builder.addCase(fetchUpdateUser.fulfilled, (state, action) => {
-      state.settings.status = action.payload;
+      if (action.payload.status === 'nicknameError') {
+        state.settings.nicknameError = true;
+      } else {
+        state.settings.status = action.payload;
+      }
       state.settings.isSettingLoading = false;
     });
     builder.addCase(fetchUpdateUser.rejected, (state, action) => {
       state.settings.status = action.payload;
+      state.settings.isSettingLoading = false;
+    });
+    builder.addCase(fetchUploadAvatar.fulfilled, (state, action) => {
+      state.settings.status = action.payload;
+      state.settings.isSettingLoading = false;
+    });
+    builder.addCase(fetchUploadAvatar.rejected, (state, action) => {
+      state.settings.status = action.payload;
+      state.settings.isSettingLoading = false;
+    });
+    builder.addCase(fetchUpdateUserPassword.pending, (state, action) => {
+      state.settings.isSettingLoading = true;
+    });
+    builder.addCase(fetchUpdateUserPassword.fulfilled, (state, action) => {
+      if (action.payload.status === 'oldPasswordError') {
+        state.settings.oldPasswordError = true;
+      } else {
+        state.settings.status = action.payload;
+        state.settings.oldPasswordError = false;
+      }
       state.settings.isSettingLoading = false;
     });
   },

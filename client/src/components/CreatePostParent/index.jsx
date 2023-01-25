@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePostDesktop from "../CreatePostDesktop";
 import CreatePostMobile from "../CreatePostMobile";
-import CreatePost from "../CreatePost";
 import { fetchCreatePost } from "../../store/slices/posts";
 
 const CreatePostParent = () => {
