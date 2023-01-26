@@ -3,8 +3,9 @@ import Header from './components/Header';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchUser } from './store/slices/user.js';
+import { fetchUser } from './store/slices/user';
 import { fetchPosts } from './store/slices/posts';
+import { fetchPostsById } from './store/slices/posts';
 
 function App() {
   const dispatch = useDispatch();

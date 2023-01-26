@@ -30,7 +30,12 @@ const SettingsMain = () => {
     setDescriptionForm(description);
     setWebsiteForm(website);
     setLocationForm(location);
-    setBirthdayForm(birthday);
+    setBirthdayForm(
+      String(new Date(birthday).toLocaleDateString())
+        .split('.')
+        .reverse()
+        .join('-')
+    );
     setImg(avatarphoto);
   }, [avatarphoto, nickname, name, description, website, location, birthday]);
 
@@ -39,7 +44,7 @@ const SettingsMain = () => {
   const [descriptionForm, setDescriptionForm] = useState(description || '');
   const [locationForm, setLocationForm] = useState(location || '');
   const [websiteForm, setWebsiteForm] = useState(website || '');
-  const [birthdayForm, setBirthdayForm] = useState(birthday || new Date());
+  const [birthdayForm, setBirthdayForm] = useState(birthday || '');
   const [showBirthdayForm, setShowBirthdayForm] = useState(false);
   const [open, setOpen] = useState(status?.status);
   const [img, setImg] = useState(avatarphoto);
@@ -57,15 +62,28 @@ const SettingsMain = () => {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
-    const userData = {
-      name: nameForm,
-      nickname: nicknameForm,
-      description: descriptionForm,
-      location: locationForm,
-      website: websiteForm,
-      birthday: new Date(birthdayForm),
-    };
+    let userData = {};
+    if (nicknameForm === nickname) {
+      userData = {
+        name: nameForm,
+        description: descriptionForm,
+        location: locationForm,
+        website: websiteForm,
+        birthday: new Date(birthdayForm),
+      };
+    } else {
+      userData = {
+        name: nameForm,
+        nickname: nicknameForm,
+        description: descriptionForm,
+        location: locationForm,
+        website: websiteForm,
+        birthday: new Date(birthdayForm),
+      };
+    }
+
     dispatch(fetchUpdateUser(userData));
+    dispatch(fetchUser());
   };
 
   return (

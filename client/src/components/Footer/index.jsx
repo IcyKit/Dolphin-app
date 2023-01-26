@@ -1,27 +1,30 @@
-import "./Footer.css";
+import './Footer.css';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const { avatarphoto } = useSelector((state) => state.user.userData);
   return (
     <footer>
-      <div class="footer-box active">
+      <div className="footer-box active">
         <a href="/">
-          <img class="footer-icon" src="/home.png" alt="" />
+          <img className="footer-icon" src="/home.png" alt="" />
         </a>
       </div>
-      <div class="footer-box">
+      <div className="footer-box">
         <a href="/">
-          <img class="footer-icon" src="/bell.png" alt="" />
+          <img className="footer-icon" src="/bell.png" alt="" />
         </a>
       </div>
-      <div class="footer-box">
+      <div className="footer-box">
         <a href="/">
-          <img class="footer-icon" src="/message.png" alt="" />
+          <img className="footer-icon" src="/message.png" alt="" />
         </a>
       </div>
-      <div class="footer-box">
-        <a href="/">
-          <img class="footer-avatar" src="/trump.png" alt="" />
-        </a>
+      <div className="footer-box">
+        <Link to="/app/profile">
+          <img className="footer-avatar" src={avatarphoto} alt="" />
+        </Link>
       </div>
     </footer>
   );

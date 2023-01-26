@@ -1,3 +1,4 @@
+const e = require('express');
 const { Client } = require('pg');
 
 const connectionString =
@@ -15,13 +16,38 @@ const client = makeNewClient();
 
 const getPosts = async () => {
   const res = await client.query(
-    'SELECT name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC'
+    'SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC'
   );
   return res.rows;
 };
 
+const getPostsById = async (id) => {
+  const res = await client.query(
+    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE id = ${id} ORDER BY postdate DESC`
+  );
+  if (!res.rows) {
+    return [];
+  }
+  return res.rows;
+};
+
+const getUserData = async (id) => {
+  const queryString = `SELECT * FROM users WHERE id = ${id}`;
+  const userData = await client.query(queryString);
+  if (!userData.rows[0]) {
+    console.log('Ошибка получения');
+    return res.json({
+      message: 'Ошибка получения пользователя',
+      status: 'error',
+    });
+  }
+  return userData.rows[0];
+};
+
 const createPost = async (user_id, content, attachment, date) => {
-  const queryString = `INSERT INTO posts (user_id, content, postdate, attachment) VALUES (${user_id}, '${content}', '${date}', '${attachment}')`;
+  const queryString = `
+  INSERT INTO posts (user_id, content, postdate, attachment) VALUES (${user_id}, '${content}', '${date}', '${attachment}');
+  UPDATE users SET totalmessages = totalmessages + 1 WHERE id = ${user_id};`;
   await client.query(queryString);
 };
 
@@ -29,7 +55,6 @@ const getUserID = async (token) => {
   const queryString = `SELECT user_id FROM sessions WHERE token = '${token}'`;
   const user_id = await client.query(queryString);
   if (!user_id.rows[0]) {
-    console.log('Юзера нет');
     return false;
   }
   return user_id.rows[0].user_id;
@@ -43,6 +68,15 @@ const checkUserNickname = async (nickname) => {
 
 const updateUserInfo = async (token, userData) => {
   const queryString = `UPDATE users SET name = '${userData.name}', nickname = '${userData.nickname}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = '${userData.birthday}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
+  const response = await client.query(queryString);
+  if (!response.rowCount) {
+    return false;
+  }
+  return true;
+};
+
+const updateUserInfoWithoutNickname = async (token, userData) => {
+  const queryString = `UPDATE users SET name = '${userData.name}', description = '${userData.description}', location = '${userData.location}', website = '${userData.website}', birthday = '${userData.birthday}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
   const response = await client.query(queryString);
   if (!response.rowCount) {
     return false;
@@ -138,7 +172,6 @@ const generateSession = async (token, nickname, date) => {
 const updateSession = async (token, nicknameOrEmail, date) => {
   const queryString = `UPDATE sessions SET token = '${token}', created_at = '${date}' WHERE user_id = (SELECT id FROM users WHERE nickname = '${nicknameOrEmail}' OR email = '${nicknameOrEmail}')`;
   await client.query(queryString);
-  // client.end();
 };
 
 const getUserByToken = async (token) => {
@@ -167,4 +200,7 @@ module.exports = {
   updateUserAvatar,
   checkUserNickname,
   updatePassword,
+  updateUserInfoWithoutNickname,
+  getUserData,
+  getPostsById,
 };

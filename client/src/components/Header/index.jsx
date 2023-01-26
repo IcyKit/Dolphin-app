@@ -9,20 +9,20 @@ const Header = () => {
 
   return (
     <header>
-      <div class="header--flexed">
-        <div class="header-menu">
+      <div className="header--flexed">
+        <div className="header-menu">
           <Link to="/app">
             <HeaderItem title="Главная" icon="/home.png" isActive={true} />
           </Link>
           <HeaderItem title="Уведомления" icon="/bell.png" isActive={false} />
           <HeaderItem title="Cообщения" icon="/message.png" isActive={false} />
         </div>
-        <div class="header-avatar">
+        <div className="header-avatar">
           <Link to="/app/settings">
             <img
               src={avatarphoto ? avatarphoto : '/default-avatar.png'}
               alt=""
-              class="header-avatar-img"
+              className="header-avatar-img"
             />
           </Link>
         </div>

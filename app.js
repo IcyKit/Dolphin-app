@@ -24,6 +24,9 @@ const {
   updateUserAvatar,
   checkUserNickname,
   updatePassword,
+  updateUserInfoWithoutNickname,
+  getUserData,
+  getPostsById,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -47,18 +50,29 @@ app.get('/me', async (req, res) => {
 app.post('/me', jsonParser, async (req, res) => {
   const token = req.cookies.token;
   const userData = req.body;
-  const checkNickname = await checkUserNickname(userData.nickname);
-  if (checkNickname) {
-    return res.json({
-      message: 'Пользователь с таким никнеймом уже существует',
-      status: 'nicknameError',
-    });
+  let response;
+  if (userData.nickname) {
+    const checkNickname = await checkUserNickname(userData.nickname);
+    if (checkNickname) {
+      return res.json({
+        message: 'Пользователь с таким никнеймом уже существует',
+        status: 'nicknameError',
+      });
+    }
+    response = await updateUserInfo(token, userData);
+  } else {
+    response = await updateUserInfoWithoutNickname(token, userData);
   }
-  const response = await updateUserInfo(token, userData);
   if (!response) {
     return res.json({ message: 'Ошибка обновления профиля', status: 'error' });
   }
   return res.json({ message: 'Профиль успешно обновлен', status: 'success' });
+});
+
+app.get('/user/:id', jsonParser, async (req, res) => {
+  const { id } = req.params;
+  const userData = await getUserData(id);
+  res.json(userData);
 });
 
 app.post('/me/avatar', jsonParser, async (req, res) => {
@@ -92,7 +106,13 @@ app.post('/me/password', jsonParser, async (req, res) => {
 
 // Получение постов
 app.get('/posts', async (req, res) => {
-  let data = await getPosts();
+  const data = await getPosts();
+  res.json(data);
+});
+
+app.get('/posts/:id', jsonParser, async (req, res) => {
+  const { id } = req.params;
+  const data = await getPostsById(Number(id));
   res.json(data);
 });
 
@@ -105,7 +125,6 @@ app.post('/posts', jsonParser, async (req, res) => {
     return res.status(401).json({ message: 'Пользователь не авторизован' });
   }
   const date = new Date().toISOString();
-  // const token = req.cookies.token;
   await createPost(user_id, content, attachment, date);
   return res.status(200).json({ message: 'Пост создан!' });
 });

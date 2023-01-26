@@ -1,33 +1,41 @@
 import './ProfileInfo.css';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const ProfileInfo = () => {
-  const { avatarphoto, name, nickname } = useSelector(
-    (state) => state.user.userData
-  );
+  const {
+    avatarphoto,
+    name,
+    nickname,
+    totalmessages,
+    totalfollowers,
+    totalfollowing,
+  } = useSelector((state) => state.user.userData);
   return (
-    <div class="profile-info aside__card card-shadow">
-      <div class="profile-info__header">
-        <img
-          src={avatarphoto ? avatarphoto : '/default-avatar.png'}
-          alt="avatar"
-        />
-        <div class="profile-info__header-title">
+    <div className="profile-info aside__card card-shadow">
+      <div className="profile-info__header">
+        <Link to="/app/profile">
+          <img
+            src={avatarphoto ? avatarphoto : '/default-avatar.png'}
+            alt="avatar"
+          />
+        </Link>
+        <div className="profile-info__header-title">
           <h2>{name}</h2>
           <p>@{nickname}</p>
         </div>
       </div>
-      <div class="profile-info__statistics">
-        <div class="profile-info__statistics-box">
-          <h2>45К</h2>
+      <div className="profile-info__statistics">
+        <div className="profile-info__statistics-box">
+          <h2>{totalmessages}</h2>
           <p>сообщений</p>
         </div>
-        <div class="profile-info__statistics-box">
-          <h2>28</h2>
+        <div className="profile-info__statistics-box">
+          <h2>{totalfollowing}</h2>
           <p>Читаемых</p>
         </div>
-        <div class="profile-info__statistics-box">
-          <h2>118</h2>
+        <div className="profile-info__statistics-box">
+          <h2>{totalfollowers}</h2>
           <p>Читателей</p>
         </div>
       </div>

@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
+import './PostsByID.css';
 import PostItem from '../PostItem';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPostsById } from '../../store/slices/posts';
+import { fetchUser } from '../../store/slices/user';
 
-const Posts = () => {
-  let posts = useSelector((state) => state.posts.posts);
+const PostsByID = ({ id }) => {
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.filteredPosts);
+
+  useEffect(() => {
+    dispatch(fetchPostsById(id));
+  }, [id]);
 
   return (
     <div className="last-messages__content card-shadow">
@@ -25,4 +34,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default PostsByID;

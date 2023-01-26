@@ -1,9 +1,9 @@
 const ActualItem = ({ title, location, messages }) => {
   return (
-    <div class="actual__theme">
+    <div className="actual__theme">
       <h4>{title}</h4>
-      <div class="actual__theme-description">
-        <div class="actual__theme-destination">
+      <div className="actual__theme-description">
+        <div className="actual__theme-destination">
           <img src="/mark.png" alt="mark" />
           <h5>{location}</h5>
         </div>

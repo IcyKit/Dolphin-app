@@ -36,7 +36,7 @@ export const fetchUpdateUserPassword = createAsyncThunk(
 );
 
 const initialState = {
-  userData: {},
+  userData: { totalmessages: 0 },
   isUserLoading: true,
   settings: {
     isSettingLoading: false,
@@ -49,7 +49,11 @@ const initialState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    incPosts: (state) => {
+      state.userData.totalmessages += 1;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.pending, (state, action) => {
       state.userData = {};
@@ -101,6 +105,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { incPosts } = userSlice.actions;
+
+export const selectUserId = (state) => state.user.userId.id;
 
 export default userSlice.reducer;

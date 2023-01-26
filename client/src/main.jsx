@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import './index.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Feed from './pages/Feed';
-import Settings from './pages/Settings';
-import SettingsMain from './components/SettingsMain';
-import SettingsPassword from './components/SettingsPassword';
+
+const App = React.lazy(() => import('./App'));
+const Feed = React.lazy(() => import('./pages/Feed'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const Settings = React.lazy(() => import('./pages/Settings'));
+const SettingsMain = React.lazy(() => import('./components/SettingsMain'));
+const SettingsPassword = React.lazy(() =>
+  import('./components/SettingsPassword')
+);
 
 const router = createBrowserRouter([
   {
@@ -33,14 +37,22 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/app/profile',
+        element: <Profile />,
+      },
+      {
+        path: '/app/users/:id',
+        element: <Profile />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Suspense fallback={<div>Загрузка...</div>}>
       <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+    </Suspense>
+  </Provider>
 );
