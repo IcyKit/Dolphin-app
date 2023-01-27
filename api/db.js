@@ -1,5 +1,24 @@
-const e = require('express');
 const { Client } = require('pg');
+
+/*
+ЗАПРОС НА ТЕХ, НА КОГО Я ПОДПИСАН
+
+SELECT *
+FROM followers_and_following
+INNER JOIN users on
+following_id = id
+WHERE user_id = 23
+*/
+
+/*
+ЗАПРОС НА ТЕХ, КТО ПОДПИСАН НА МЕНЯ
+
+SELECT *
+FROM followers_and_following
+INNER JOIN users on
+user_id = id
+WHERE following_id = 23
+*/
 
 const connectionString =
   'postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development';
@@ -164,6 +183,16 @@ const getHashedPassword = async (value) => {
   }
 };
 
+const followUser = async (id, following_id) => {
+  const queryString = `INSERT INTO followers_and_following (user_id, following_id) VALUES (${id}, ${following_id})`;
+  await client.query(queryString);
+};
+
+const unfollowUser = async (id, following_id) => {
+  const queryString = `DELETE FROM followers_and_following WHERE user_id = ${id} AND following_id = ${following_id}`;
+  await client.query(queryString);
+};
+
 const generateSession = async (token, nickname, date) => {
   const queryString = `INSERT INTO sessions (token, user_id, created_at) VALUES ('${token}', (SELECT id FROM users WHERE nickname = '${nickname}'), '${date}')`;
   await client.query(queryString);
@@ -175,9 +204,31 @@ const updateSession = async (token, nicknameOrEmail, date) => {
 };
 
 const getUserByToken = async (token) => {
-  const queryString = `SELECT * FROM users WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
-  const userData = await client.query(queryString);
-  return userData.rows[0];
+  const user_id = await getUserID(token);
+  const userDataQueryString = `SELECT * FROM users WHERE id = ${user_id}`;
+  const userData = await client.query(userDataQueryString);
+  const followingQueryString = `SELECT *
+  FROM followers_and_following
+  INNER JOIN users on
+  following_id = id
+  WHERE user_id = ${user_id}`;
+  const followingData = await client.query(followingQueryString);
+  const followersQueryString = `SELECT *
+  FROM followers_and_following
+  INNER JOIN users on
+  user_id = id
+  WHERE following_id = ${user_id}`;
+  const followersData = await client.query(followersQueryString);
+  const finalObj = {
+    ...userData.rows[0],
+    following: followingData.rows,
+    followers: followersData.rows,
+  };
+  return finalObj;
+};
+
+const getFollowing = async (token) => {
+  const queryString = ``;
 };
 
 module.exports = {
@@ -203,4 +254,6 @@ module.exports = {
   updateUserInfoWithoutNickname,
   getUserData,
   getPostsById,
+  followUser,
+  unfollowUser,
 };

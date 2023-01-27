@@ -27,6 +27,8 @@ const {
   updateUserInfoWithoutNickname,
   getUserData,
   getPostsById,
+  followUser,
+  unfollowUser,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -114,6 +116,18 @@ app.get('/posts/:id', jsonParser, async (req, res) => {
   const { id } = req.params;
   const data = await getPostsById(Number(id));
   res.json(data);
+});
+
+app.post('/follow', jsonParser, async (req, res) => {
+  const { id, user_id } = req.body;
+  await followUser(id, user_id);
+  res.json({ message: 'Followed' });
+});
+
+app.post('/unfollow', jsonParser, async (req, res) => {
+  const { id, user_id } = req.body;
+  await unfollowUser(id, user_id);
+  res.json({ message: 'Unfollowed' });
 });
 
 // Создание поста

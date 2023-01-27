@@ -7,9 +7,10 @@ import { BiCake } from 'react-icons/bi';
 import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { fetchUser } from '../../store/slices/user';
+import FollowButton from '../FollowButton';
 
 const ProfileCard = () => {
-  const [userData, setUserData] = useState({}); // сделать подтягивание через стейт
+  const [userData, setUserData] = useState({});
   const { pathname } = useLocation();
   const { id } = useParams();
   const { totalmessages } = useSelector((state) => state.user.userData);
@@ -82,9 +83,7 @@ const ProfileCard = () => {
             <p>Читателей</p>
           </div>
         </div>
-        {pathname === '/app/profile' ? null : (
-          <button className="profile__info_btn btn">Читать</button>
-        )}
+        {pathname === '/app/profile' ? null : <FollowButton user_id={id} />}
       </div>
     </section>
   );

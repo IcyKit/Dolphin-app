@@ -8,16 +8,17 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PostsByID from '../../components/PostsByID';
 import { fetchPosts } from '../../store/slices/posts';
+import { CircularProgress } from '@mui/material';
 
 const Profile = () => {
   const { pathname } = useLocation();
   const params = useParams().id;
   const { id } = useSelector((state) => state.user.userData);
+  const { isUserLoading } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    // if (pathname === '/app/profile') {
-    // }
-  }, []);
+  if (isUserLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <main>

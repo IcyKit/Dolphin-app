@@ -14,6 +14,8 @@ export default defineConfig({
       '/posts': 'http://localhost:3001',
       '/me': 'http://localhost:3001',
       '/user': 'http://localhost:3001',
+      '/follow': 'http://localhost:3001',
+      '/unfollow': 'http://localhost:3001',
     },
   },
   plugins: [react()],

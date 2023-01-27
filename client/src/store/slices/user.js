@@ -14,6 +14,24 @@ export const fetchUpdateUser = createAsyncThunk(
   }
 );
 
+export const fetchFollowUser = createAsyncThunk(
+  'user/fetchFollowUser',
+  async ({ id, user_id }) => {
+    await axios.post('/follow', { id, user_id });
+    const { data } = await axios.get('/me');
+    return data;
+  }
+);
+
+export const fetchUnfollowUser = createAsyncThunk(
+  'user/fetchUnfollowUser',
+  async ({ id, user_id }) => {
+    await axios.post('/unfollow', { id, user_id });
+    const { data } = await axios.get('/me');
+    return data;
+  }
+);
+
 export const fetchUploadAvatar = createAsyncThunk(
   'user/fetchUploadAvatar',
   async (url) => {
