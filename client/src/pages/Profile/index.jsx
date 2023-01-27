@@ -1,5 +1,4 @@
 import './Profile.css';
-import { useState, useEffect } from 'react';
 import CreatePost from '../../components/CreatePost';
 import Actual from '../../components/Actual';
 import Bloggers from '../../components/Bloggers';
@@ -7,7 +6,6 @@ import ProfileCard from '../../components/ProfileCard';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PostsByID from '../../components/PostsByID';
-import { fetchPosts } from '../../store/slices/posts';
 import { CircularProgress } from '@mui/material';
 
 const Profile = () => {

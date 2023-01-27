@@ -29,6 +29,7 @@ const {
   getPostsById,
   followUser,
   unfollowUser,
+  getPostsByFollowed,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -109,6 +110,12 @@ app.post('/me/password', jsonParser, async (req, res) => {
 // Получение постов
 app.get('/posts', async (req, res) => {
   const data = await getPosts();
+  res.json(data);
+});
+
+app.post('/posts/followed', jsonParser, async (req, res) => {
+  const { followingId, id } = req.body;
+  const data = await getPostsByFollowed(followingId, id);
   res.json(data);
 });
 

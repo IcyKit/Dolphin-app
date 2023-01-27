@@ -35,7 +35,14 @@ const client = makeNewClient();
 
 const getPosts = async () => {
   const res = await client.query(
-    'SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC'
+    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC`
+  );
+  return res.rows;
+};
+
+const getPostsByFollowed = async (following_id, id) => {
+  const res = await client.query(
+    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`
   );
   return res.rows;
 };
@@ -256,4 +263,5 @@ module.exports = {
   getPostsById,
   followUser,
   unfollowUser,
+  getPostsByFollowed,
 };
