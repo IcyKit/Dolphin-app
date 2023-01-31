@@ -1,25 +1,5 @@
 const { Client } = require('pg');
 
-/*
-ЗАПРОС НА ТЕХ, НА КОГО Я ПОДПИСАН
-
-SELECT *
-FROM followers_and_following
-INNER JOIN users on
-following_id = id
-WHERE user_id = 23
-*/
-
-/*
-ЗАПРОС НА ТЕХ, КТО ПОДПИСАН НА МЕНЯ
-
-SELECT *
-FROM followers_and_following
-INNER JOIN users on
-user_id = id
-WHERE following_id = 23
-*/
-
 const connectionString =
   'postgres://icykit:zC5UPHaENAenLMezWnFfiBkmov9PlKXk@dpg-ce4anoarrk0djk4lds60-a.frankfurt-postgres.render.com/twitter_development';
 const makeNewClient = () => {
@@ -41,9 +21,13 @@ const getPosts = async () => {
 };
 
 const getPostsByFollowed = async (following_id, id) => {
-  const res = await client.query(
-    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`
-  );
+  let queryString;
+  if (!following_id) {
+    queryString = `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id = ${id} ORDER BY postdate DESC`;
+  } else {
+    queryString = `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`;
+  }
+  const res = await client.query(queryString);
   return res.rows;
 };
 
@@ -131,6 +115,12 @@ const createUser = async (nickname, password, email) => {
   await client.query(queryString);
 };
 
+const getRecommendBloggers = async (nickname, password, email) => {
+  const queryString = `SELECT * FROM users ORDER BY totalfollowers DESC LIMIT 3`;
+  const data = await client.query(queryString);
+  return data.rows;
+};
+
 const updatePassword = async (token, password) => {
   const queryString = `UPDATE users SET password = '${password}' WHERE id = (SELECT user_id FROM sessions WHERE token = '${token}')`;
   const result = await client.query(queryString);
@@ -191,12 +181,18 @@ const getHashedPassword = async (value) => {
 };
 
 const followUser = async (id, following_id) => {
-  const queryString = `INSERT INTO followers_and_following (user_id, following_id) VALUES (${id}, ${following_id})`;
-  await client.query(queryString);
+  const followQueryString = `
+    INSERT INTO followers_and_following (user_id, following_id) VALUES (${id}, ${following_id});
+    UPDATE users SET totalfollowers = totalfollowers + 1 WHERE id = ${following_id};
+    UPDATE users SET totalfollowing = totalfollowing + 1 WHERE id = ${id};`;
+  await client.query(followQueryString);
 };
 
 const unfollowUser = async (id, following_id) => {
-  const queryString = `DELETE FROM followers_and_following WHERE user_id = ${id} AND following_id = ${following_id}`;
+  const queryString = `
+    DELETE FROM followers_and_following WHERE user_id = ${id} AND following_id = ${following_id};
+    UPDATE users SET totalfollowers = totalfollowers - 1 WHERE id = ${following_id};
+    UPDATE users SET totalfollowing = totalfollowing - 1 WHERE id = ${id};`;
   await client.query(queryString);
 };
 
@@ -264,4 +260,5 @@ module.exports = {
   followUser,
   unfollowUser,
   getPostsByFollowed,
+  getRecommendBloggers,
 };

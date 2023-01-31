@@ -3,7 +3,6 @@ import './PostsByID.css';
 import PostItem from '../PostItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPostsById } from '../../store/slices/posts';
-import { fetchUser } from '../../store/slices/user';
 
 const PostsByID = ({ id }) => {
   const dispatch = useDispatch();

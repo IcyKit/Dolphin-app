@@ -30,6 +30,7 @@ const {
   followUser,
   unfollowUser,
   getPostsByFollowed,
+  getRecommendBloggers,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -169,6 +170,11 @@ app.post('/posts/:id', jsonParser, checkToken, checkLogin, async (req, res) => {
   const { content } = req.body;
   await updatePost(postId, content);
   return res.status(200).json({ message: 'Пост обновлен!' });
+});
+
+app.get('/recommends/bloggers', async (req, res) => {
+  const data = await getRecommendBloggers();
+  return res.json(data);
 });
 
 // Создание пользователя

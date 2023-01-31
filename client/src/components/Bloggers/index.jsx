@@ -1,24 +1,22 @@
 import './Bloggers.css';
+import { useEffect } from 'react';
 import BloggersItem from '../BloggersItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBloggers } from '../../store/slices/recommends';
 
 const Bloggers = () => {
-  const bloggers = [
-    {
-      name: 'Хабр Научпоп',
-      nickname: 'habr_popsci',
-      avatarUrl: '/blogger1.png',
-    },
-    {
-      name: 'Матч ТВ',
-      nickname: 'MatchTV',
-      avatarUrl: '/blogger2.png',
-    },
-    {
-      name: 'Популярная механика',
-      nickname: 'PopMechanica',
-      avatarUrl: '/blogger3.png',
-    },
-  ];
+  const dispatch = useDispatch();
+  const { isBloggersLoading, bloggers } = useSelector(
+    (state) => state.recommends
+  );
+
+  useEffect(() => {
+    dispatch(fetchBloggers());
+  }, []);
+
+  if (isBloggersLoading) {
+    return <h3>Загрузка...</h3>;
+  }
 
   return (
     <div className="bloggers aside__card card-shadow">
@@ -28,7 +26,8 @@ const Bloggers = () => {
           <BloggersItem
             name={item.name}
             nickname={item.nickname}
-            avatarUrl={item.avatarUrl}
+            avatarUrl={item.avatarphoto}
+            id={item.id}
           />
         ))}
       </div>
