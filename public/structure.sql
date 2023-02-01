@@ -18,7 +18,7 @@ CREATE TABLE users (
 	birthday date
 );
 
-CREATE TABLE posts (
+CREATE TABLE posts 
 	post_id SERIAL PRIMARY KEY NOT NULL,
 	user_id SERIAL REFERENCES users (id) NOT NULL,
 	content varchar(255) NOT NULL,

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CreatePostDesktop from '../CreatePostDesktop';
 import CreatePostMobile from '../CreatePostMobile';
 import { fetchCreatePost } from '../../store/slices/posts';
-import { incPosts } from '../../store/slices/user';
 
 const CreatePostParent = () => {
   const [text, setText] = useState('');
@@ -16,17 +15,13 @@ const CreatePostParent = () => {
     setLength(text.length);
   }, [text]);
 
-  useEffect(() => {
-    console.log(img);
-  }, [img]);
-
   const onTextInput = (e) => {
     setText(e.target.value);
   };
 
   const createPost = async () => {
     dispatch(fetchCreatePost({ text, img }));
-    dispatch(incPosts());
+    // dispatch(incPosts());
   };
 
   return (

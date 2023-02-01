@@ -1,45 +1,27 @@
+import { useDispatch, useSelector } from 'react-redux';
 import ActualItem from '../ActualItem';
 import './Actual.css';
+import { useEffect } from 'react';
+import { fetchActual } from '../../store/slices/recommends';
 
 const Actual = () => {
-  const actual = [
-    {
-      title: 'Новый год 2023',
-      location: 'Россия',
-      messages: 2941,
-    },
-    {
-      title: 'BTS',
-      location: 'Мир',
-      messages: 29718,
-    },
-    {
-      title: 'Украина',
-      location: 'Россия',
-      messages: 958186,
-    },
-    {
-      title: 'Дудь',
-      location: 'Москва',
-      messages: 4185,
-    },
-    {
-      title: 'ЛГБТ',
-      location: 'Москва',
-      messages: 482,
-    },
-  ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchActual());
+  }, []);
+
+  const { actual, isActualLoading } = useSelector((state) => state.recommends);
+
+  if (isActualLoading) {
+    return <h3>Загрузка...</h3>;
+  }
 
   return (
     <div className="actual aside__card card-shadow">
       <h3>Актуальные темы</h3>
       <div className="actual__themes">
         {actual.map((theme) => (
-          <ActualItem
-            title={theme.title}
-            location={theme.location}
-            messages={theme.messages}
-          />
+          <ActualItem title={theme.name} messages={theme.count} />
         ))}
       </div>
     </div>

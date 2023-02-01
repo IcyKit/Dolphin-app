@@ -9,6 +9,14 @@ export const fetchBloggers = createAsyncThunk(
   }
 );
 
+export const fetchActual = createAsyncThunk(
+  'recommends/fetchActual',
+  async () => {
+    const { data } = await axios.get('/recommends/actual');
+    return data;
+  }
+);
+
 const initialState = {
   bloggers: [],
   actual: [],
@@ -27,6 +35,13 @@ export const recommendsSlice = createSlice({
     builder.addCase(fetchBloggers.fulfilled, (state, action) => {
       state.isBloggersLoading = false;
       state.bloggers = action.payload;
+    });
+    builder.addCase(fetchActual.pending, (state, action) => {
+      state.isActualLoading = false;
+    });
+    builder.addCase(fetchActual.fulfilled, (state, action) => {
+      state.isActualLoading = false;
+      state.actual = action.payload;
     });
   },
 });

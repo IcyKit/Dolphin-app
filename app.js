@@ -31,6 +31,10 @@ const {
   unfollowUser,
   getPostsByFollowed,
   getRecommendBloggers,
+  checkHashtag,
+  addHashtag,
+  updateHashtag,
+  getRecommendActual,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -147,6 +151,18 @@ app.post('/posts', jsonParser, async (req, res) => {
     return res.status(401).json({ message: 'Пользователь не авторизован' });
   }
   const date = new Date().toISOString();
+  const hastags = content
+    .split(' ')
+    .filter((word) => word.startsWith('#'))
+    .map((word) => word.slice(1).replace(',', ''));
+  hastags.forEach(async (word) => {
+    const hashtagResult = await checkHashtag(word);
+    if (!hashtagResult) {
+      await addHashtag(word);
+    } else {
+      await updateHashtag(word);
+    }
+  });
   await createPost(user_id, content, attachment, date);
   return res.status(200).json({ message: 'Пост создан!' });
 });
@@ -174,6 +190,11 @@ app.post('/posts/:id', jsonParser, checkToken, checkLogin, async (req, res) => {
 
 app.get('/recommends/bloggers', async (req, res) => {
   const data = await getRecommendBloggers();
+  return res.json(data);
+});
+
+app.get('/recommends/actual', async (req, res) => {
+  const data = await getRecommendActual();
   return res.json(data);
 });
 

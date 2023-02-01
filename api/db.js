@@ -115,8 +115,14 @@ const createUser = async (nickname, password, email) => {
   await client.query(queryString);
 };
 
-const getRecommendBloggers = async (nickname, password, email) => {
+const getRecommendBloggers = async () => {
   const queryString = `SELECT * FROM users ORDER BY totalfollowers DESC LIMIT 3`;
+  const data = await client.query(queryString);
+  return data.rows;
+};
+
+const getRecommendActual = async () => {
+  const queryString = `SELECT name, count FROM hashtags ORDER BY count DESC LIMIT 5`;
   const data = await client.query(queryString);
   return data.rows;
 };
@@ -230,8 +236,19 @@ const getUserByToken = async (token) => {
   return finalObj;
 };
 
-const getFollowing = async (token) => {
-  const queryString = ``;
+const checkHashtag = async (hashtag) => {
+  const queryString = `SELECT EXISTS (SELECT name FROM hashtags WHERE name = '${hashtag}')`;
+  const result = await client.query(queryString);
+  return result.rows[0].exists;
+};
+
+const addHashtag = async (hashtag) => {
+  const queryString = `INSERT INTO hashtags (name, count) VALUES ('${hashtag}', 1)`;
+  await client.query(queryString);
+};
+
+const updateHashtag = async (hashtag) => {
+  const queryString = `UPDATE hashtags SET count = count + 1 WHERE name = '${hashtag}'`;
 };
 
 module.exports = {
@@ -261,4 +278,8 @@ module.exports = {
   unfollowUser,
   getPostsByFollowed,
   getRecommendBloggers,
+  checkHashtag,
+  addHashtag,
+  updateHashtag,
+  getRecommendActual,
 };
