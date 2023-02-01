@@ -115,8 +115,8 @@ const createUser = async (nickname, password, email) => {
   await client.query(queryString);
 };
 
-const getRecommendBloggers = async () => {
-  const queryString = `SELECT * FROM users ORDER BY totalfollowers DESC LIMIT 3`;
+const getRecommendBloggers = async (id) => {
+  const queryString = `SELECT * FROM users WHERE id != ${id} ORDER BY totalfollowers DESC LIMIT 3`;
   const data = await client.query(queryString);
   return data.rows;
 };

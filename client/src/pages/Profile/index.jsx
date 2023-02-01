@@ -4,7 +4,7 @@ import Actual from '../../components/Actual';
 import Bloggers from '../../components/Bloggers';
 import ProfileCard from '../../components/ProfileCard';
 import { useLocation, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PostsByID from '../../components/PostsByID';
 import { CircularProgress } from '@mui/material';
 
