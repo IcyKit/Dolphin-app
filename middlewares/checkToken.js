@@ -1,10 +1,14 @@
-const checkToken = (req, res, next) => {
+const { getUserByToken } = require('../api/db.js');
+
+const checkToken = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    console.log("Доступ запрещен");
-    return res.status(400).json({ message: "Доступ запрещен" });
+    return res.json({ message: 'Доступ запрещен' });
   }
-  console.log("Доступ разрешен");
+  const checkUser = await getUserByToken(token);
+  if (!checkUser) {
+    return res.json({ message: 'Доступ запрещен' });
+  }
   next();
 };
 

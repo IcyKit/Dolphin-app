@@ -1,15 +1,25 @@
-import "./CreatePost.css";
+import './CreatePost.css';
+import { useSelector } from 'react-redux';
+import CreatePostParent from '../CreatePostParent';
+import { useState } from 'react';
 
-const CreatePost = ({ setIsOpen }) => {
+const CreatePost = () => {
+  const { name } = useSelector((state) => state.user.userData);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="new-post">
-      <form onClick={() => setIsOpen(true)}>
-        <input
-          type="text"
-          class="new-post-input card-shadow"
-          placeholder="Что нового, Donald?"
-        />
-      </form>
+      {isOpen ? (
+        <CreatePostParent />
+      ) : (
+        <form onClick={() => setIsOpen(true)}>
+          <input
+            type="text"
+            className="new-post-input card-shadow"
+            placeholder={`Что нового, ${name}?`}
+          />
+        </form>
+      )}
     </section>
   );
 };

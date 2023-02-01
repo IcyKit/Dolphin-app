@@ -12,7 +12,7 @@
   font-size: 18px;
   color: #0057ff;
   cursor: pointer;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   text-align: center;
 }
 
@@ -21,6 +21,17 @@
   color: #fff;
 }
 
+.error-modal {
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.margin-reset {
+  margin-bottom: 0 !important;
+}
 
 .btn-disabled {
   background-color: #ebebeb !important;

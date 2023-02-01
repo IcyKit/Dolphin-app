@@ -1,8 +1,8 @@
-import "./CreatePostMobile.css";
-import { CircularProgress } from "@mui/material";
-import AttachToPost from "../AttachToPost";
-import TextAreaCircular from "../TextAreaCircular";
-import TextArea from "../TextArea";
+import './CreatePostMobile.css';
+import { CircularProgress } from '@mui/material';
+import AttachToPost from '../AttachToPost';
+import TextAreaCircular from '../TextAreaCircular';
+import TextArea from '../TextArea';
 const CreatePostMobile = ({
   isLoading,
   text,
@@ -16,7 +16,7 @@ const CreatePostMobile = ({
       <div className="post-popup-content">
         <div className="post-popup-comment">
           <div className="post-popup-drag"></div>
-          {/* <div class="post-popup-replyto"> */}
+          {/* <div className="post-popup-replyto"> */}
           {/*   <img src="/musk.png" alt="" /> */}
           {/*   <p>В ответ @elonmusk</p> */}
           {/* </div> */}

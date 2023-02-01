@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-import { BsReply } from "react-icons/bs";
-import { FiShare } from "react-icons/fi";
+import { useState } from 'react';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { BsReply } from 'react-icons/bs';
+import { FiShare } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const PostItem = ({
   avatarUrl,
@@ -13,8 +15,12 @@ const PostItem = ({
   likes,
   forward,
   attachment,
+  user_id,
+  isLast,
 }) => {
   const [isLike, setIsLike] = useState(false);
+  const { id } = useSelector((state) => state.user.userData);
+  const user_link = user_id === id ? '/app/profile' : `/app/users/${user_id}`;
 
   const makeSentence = (number, words) => {
     number = Math.abs(number) % 100;
@@ -32,17 +38,16 @@ const PostItem = ({
   };
   const getTimeOfMessage = (time) => {
     const timeElapsed = new Date() - new Date(time);
-    console.log(timeElapsed);
     const minutes = Math.floor(timeElapsed / 1000 / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
-    const minutesArr = ["минуту", "минуты", "минут"];
-    const hoursArr = ["час", "часа", "часов"];
-    const daysArr = ["день", "дня", "дней"];
+    const minutesArr = ['минуту', 'минуты', 'минут'];
+    const hoursArr = ['час', 'часа', 'часов'];
+    const daysArr = ['день', 'дня', 'дней'];
     if (days > 365) {
-      return "Больше года назад";
+      return 'Больше года назад';
     } else if (days > 31) {
-      return "Больше месяца назад";
+      return 'Больше месяца назад';
     } else if (hours > 24) {
       return makeSentence(days, daysArr);
     } else if (minutes > 60) {
@@ -55,44 +60,51 @@ const PostItem = ({
   const postDate = getTimeOfMessage(date);
   return (
     <>
-      <div class="last-messages__box">
-        <img class="last-messages__box-avatar" src={avatarUrl} alt="Avatar" />
-        <div class="last-messages__box-right">
-          <div class="last-messages__box-title">
-            <div class="last-messages__box-title_left">
-              <h3>{name}</h3>
-              <p class="last-messages__box-nickname">@{nickname}</p>
+      <div className={`last-messages__box ${isLast ? 'margin-reset' : ''}`}>
+        <img
+          className="last-messages__box-avatar"
+          src={avatarUrl}
+          alt="Avatar"
+        />
+        <div className="last-messages__box-right">
+          <div className="last-messages__box-title">
+            <div className="last-messages__box-title_left">
+              <Link to={user_link}>
+                <h3>{name}</h3>
+              </Link>
+              <p className="last-messages__box-nickname">@{nickname}</p>
             </div>
-            <p class="last-messages__box-time">{postDate}</p>
+            <p className="last-messages__box-time">{postDate}</p>
           </div>
-          <div class="last-messages__box-message">
+
+          <div className="last-messages__box-message">
             <p>{text}</p>
             {attachment && <img src={attachment} alt="attachment" />}
           </div>
-          <div class="last-messages__box-statistics">
-            <div class="last-messages__box-statistic">
-              {/* <img src="/reply.png" alt="Reply" /> */}
-              <BsReply />
-              <p class="last-messages__box-statistic-title">{replies}</p>
-            </div>
+
+          <div className="last-messages__box-statistics">
             <div
-              className={`last-messages__box-statistic ${isLike ? "active-icon" : ""
-                }`}
+              className={`last-messages__box-statistic ${
+                isLike ? 'active-icon' : ''
+              }`}
               onClick={() => setIsLike(!isLike)}
             >
-              {/* <img src="/like.png" alt="Like" /> */}
               <AiOutlineHeart />
-              <p class="last-messages__box-statistic-title">{likes}</p>
+              <p className="last-messages__box-statistic-title">{likes}</p>
             </div>
-            <div class="last-messages__box-statistic">
-              {/* <img src="/forward.png" alt="Forward" /> */}
+            <div className="last-messages__box-statistic">
+              <BsReply />
+              <p className="last-messages__box-statistic-title">{replies}</p>
+            </div>
+
+            <div className="last-messages__box-statistic">
               <FiShare />
-              <p class="last-messages__box-statistic-title">{forward}</p>
+              <p className="last-messages__box-statistic-title">{forward}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="divider"></div>
+      <div className="divider"></div>
     </>
   );
 };

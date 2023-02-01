@@ -20,6 +20,21 @@ const {
   getUserID,
   getUserByToken,
   updateUserInfo,
+  client,
+  updateUserAvatar,
+  checkUserNickname,
+  updatePassword,
+  updateUserInfoWithoutNickname,
+  getUserData,
+  getPostsById,
+  followUser,
+  unfollowUser,
+  getPostsByFollowed,
+  getRecommendBloggers,
+  checkHashtag,
+  addHashtag,
+  updateHashtag,
+  getRecommendActual,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -40,17 +55,91 @@ app.get('/me', async (req, res) => {
 });
 
 // Обновление пользователя
-app.post('/me', async (req, res) => {
+app.post('/me', jsonParser, async (req, res) => {
   const token = req.cookies.token;
-  const { userData } = req.body;
-  console.log(userData);
-  // await updateUserInfo(token, userData);
+  const userData = req.body;
+  let response;
+  if (userData.nickname) {
+    const checkNickname = await checkUserNickname(userData.nickname);
+    if (checkNickname) {
+      return res.json({
+        message: 'Пользователь с таким никнеймом уже существует',
+        status: 'nicknameError',
+      });
+    }
+    response = await updateUserInfo(token, userData);
+  } else {
+    response = await updateUserInfoWithoutNickname(token, userData);
+  }
+  if (!response) {
+    return res.json({ message: 'Ошибка обновления профиля', status: 'error' });
+  }
+  return res.json({ message: 'Профиль успешно обновлен', status: 'success' });
+});
+
+app.get('/user/:id', jsonParser, async (req, res) => {
+  const { id } = req.params;
+  const userData = await getUserData(id);
+  res.json(userData);
+});
+
+app.post('/me/avatar', jsonParser, async (req, res) => {
+  const token = req.cookies.token;
+  const { url } = req.body;
+  const response = await updateUserAvatar(token, url);
+  if (!response) {
+    res.json({ message: 'Ошибка обновления аватара', status: 'error' });
+  }
+  res.json({ message: 'Аватар успешно обновлен', status: 'success' });
+});
+
+app.post('/me/password', jsonParser, async (req, res) => {
+  const token = req.cookies.token;
+  const { newPassword, oldPassword } = req.body;
+  const oldPasswordHashed = await getHashedPassword(token);
+  const comparedPasswords = await bcrypt.compare(
+    oldPassword,
+    oldPasswordHashed
+  );
+  if (!comparedPasswords) {
+    return res.json({
+      message: 'Текущий пароль неверный',
+      status: 'oldPasswordError',
+    });
+  }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await updatePassword(token, hashedPassword);
+  return res.json({ message: 'Пароль успешно изменен', status: 'success' });
 });
 
 // Получение постов
 app.get('/posts', async (req, res) => {
-  let data = await getPosts();
+  const data = await getPosts();
   res.json(data);
+});
+
+app.post('/posts/followed', jsonParser, async (req, res) => {
+  const { followingId, id } = req.body;
+  const data = await getPostsByFollowed(followingId, id);
+  res.json(data);
+});
+
+app.get('/posts/:id', jsonParser, async (req, res) => {
+  const { id } = req.params;
+  const data = await getPostsById(Number(id));
+  res.json(data);
+});
+
+app.post('/follow', jsonParser, async (req, res) => {
+  const { id, user_id } = req.body;
+  await followUser(id, user_id);
+  res.json({ message: 'Followed' });
+});
+
+app.post('/unfollow', jsonParser, async (req, res) => {
+  const { id, user_id } = req.body;
+  await unfollowUser(id, user_id);
+  res.json({ message: 'Unfollowed' });
 });
 
 // Создание поста
@@ -62,7 +151,18 @@ app.post('/posts', jsonParser, async (req, res) => {
     return res.status(401).json({ message: 'Пользователь не авторизован' });
   }
   const date = new Date().toISOString();
-  // const token = req.cookies.token;
+  const hastags = content
+    .split(' ')
+    .filter((word) => word.startsWith('#'))
+    .map((word) => word.slice(1).replace(',', ''));
+  hastags.forEach(async (word) => {
+    const hashtagResult = await checkHashtag(word);
+    if (!hashtagResult) {
+      await addHashtag(word);
+    } else {
+      await updateHashtag(word);
+    }
+  });
   await createPost(user_id, content, attachment, date);
   return res.status(200).json({ message: 'Пост создан!' });
 });
@@ -86,6 +186,16 @@ app.post('/posts/:id', jsonParser, checkToken, checkLogin, async (req, res) => {
   const { content } = req.body;
   await updatePost(postId, content);
   return res.status(200).json({ message: 'Пост обновлен!' });
+});
+
+app.get('/recommends/bloggers', async (req, res) => {
+  const data = await getRecommendBloggers();
+  return res.json(data);
+});
+
+app.get('/recommends/actual', async (req, res) => {
+  const data = await getRecommendActual();
+  return res.json(data);
 });
 
 // Создание пользователя
@@ -149,8 +259,11 @@ app.get('/', async (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/app', (req, res) => {
+app.get('/app', checkToken, async (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => {
+  console.log(`App listening on port ${port}!`);
+  client.connect();
+});
