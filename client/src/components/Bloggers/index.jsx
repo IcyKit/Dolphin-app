@@ -27,7 +27,7 @@ const Bloggers = () => {
             name={item.name}
             nickname={item.nickname}
             avatarUrl={item.avatarphoto}
-            id={item.id}
+            user_id={item.id}
           />
         ))}
       </div>

@@ -189,7 +189,9 @@ app.post('/posts/:id', jsonParser, checkToken, checkLogin, async (req, res) => {
 });
 
 app.get('/recommends/bloggers', async (req, res) => {
-  const data = await getRecommendBloggers();
+  const token = req.cookies.token;
+  const id = await getUserID(token);
+  const data = await getRecommendBloggers(id);
   return res.json(data);
 });
 

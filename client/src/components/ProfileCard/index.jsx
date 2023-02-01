@@ -15,11 +15,19 @@ const ProfileCard = () => {
   const { id } = useParams();
   const { totalmessages } = useSelector((state) => state.user.userData);
 
+  // useEffect(() => {
+  //   if (pathname === '/app/profile') {
+  //     axios.get(`/me`).then((res) => setUserData(res.data));
+  //   } else {
+  //     axios.get(`/user/${id}`).then((res) => setUserData(res.data));
+  //   }
+  // }, [pathname, totalmessages]);
+
   useEffect(() => {
-    if (pathname === '/app/profile') {
-      axios.get(`/me`).then((res) => setUserData(res.data));
-    } else {
+    if (pathname === `/app/users/${id}`) {
       axios.get(`/user/${id}`).then((res) => setUserData(res.data));
+    } else {
+      axios.get(`/me`).then((res) => setUserData(res.data));
     }
   }, [pathname, totalmessages]);
 
@@ -83,7 +91,7 @@ const ProfileCard = () => {
             <p>Читателей</p>
           </div>
         </div>
-        {pathname === '/app/profile' ? null : <FollowButton user_id={id} />}
+        {pathname === `/app/users/${id}` ? <FollowButton user_id={id} /> : null}
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import './index.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Followers from './pages/Followers';
 
 const App = React.lazy(() => import('./App'));
 const Feed = React.lazy(() => import('./pages/Feed'));
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/app/users/:id',
         element: <Profile />,
+      },
+      {
+        path: '/app/followers',
+        element: <Followers />,
       },
     ],
   },

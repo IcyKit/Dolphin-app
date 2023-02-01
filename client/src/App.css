@@ -3,13 +3,11 @@
 }
 
 .btn {
-  width: 100%;
+  /* width: 100%; */
   padding: 15px 0;
   margin-bottom: 15px;
   border: 1px solid #0057ff;
   background: none;
-  border-radius: 10px;
-  font-size: 18px;
   color: #0057ff;
   cursor: pointer;
   font-family: 'Lato', sans-serif;
@@ -83,7 +81,7 @@ aside {
   }
 
   .btn {
-    width: 70%;
+    /* width: 70%; */
   }
 
   .card-shadow {
