@@ -19,6 +19,7 @@ const Posts = () => {
           attachment={item.attachment}
           user_id={item.user_id}
           isLast={index === posts.length - 1}
+          post_id={item.post_id}
         />
       ))}
     </div>

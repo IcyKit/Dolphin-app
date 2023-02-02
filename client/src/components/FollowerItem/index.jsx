@@ -1,6 +1,7 @@
 import { fetchFollowUser, fetchUnfollowUser } from '../../store/slices/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const FollowerItem = ({
   name,
@@ -41,7 +42,9 @@ const FollowerItem = ({
           <div class="followers__box-title">
             <div class="followers__box-title_left">
               <div class="followers__box-title-inner-left">
-                <h3>{name}</h3>
+                <Link to={`/app/users/${user_id}`}>
+                  <h3>{name}</h3>
+                </Link>
                 <p class="followers__box-nickname">@{nickname}</p>
               </div>
               {isFollowing ? (
