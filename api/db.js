@@ -15,7 +15,7 @@ const client = makeNewClient();
 
 const getPosts = async () => {
   const res = await client.query(
-    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC`
+    `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC`
   );
   return res.rows;
 };
@@ -23,9 +23,9 @@ const getPosts = async () => {
 const getPostsByFollowed = async (following_id, id) => {
   let queryString;
   if (!following_id) {
-    queryString = `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id = ${id} ORDER BY postdate DESC`;
+    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id = ${id} ORDER BY postdate DESC`;
   } else {
-    queryString = `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`;
+    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`;
   }
   const res = await client.query(queryString);
   return res.rows;
@@ -33,7 +33,7 @@ const getPostsByFollowed = async (following_id, id) => {
 
 const getPostsById = async (id) => {
   const res = await client.query(
-    `SELECT user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE id = ${id} ORDER BY postdate DESC`
+    `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE id = ${id} ORDER BY postdate DESC`
   );
   if (!res.rows) {
     return [];
@@ -107,6 +107,22 @@ const deletePost = async (post_id) => {
 
 const updatePost = async (post_id, content) => {
   const queryString = `UPDATE posts SET content = '${content}' WHERE post_id = ${post_id}`;
+  await client.query(queryString);
+};
+
+const getPostLikes = async (post_id) => {
+  const queryString = `SELECT user_id from post_likes WHERE post_id = ${post_id}`;
+  const data = await client.query(queryString);
+  return data.rows;
+};
+
+const likePost = async (post_id, user_id) => {
+  const queryString = `INSERT INTO post_likes (post_id, user_id) VALUES (${post_id}, ${user_id})`;
+  await client.query(queryString);
+};
+
+const unlikePost = async (post_id, user_id) => {
+  const queryString = `DELETE from post_likes WHERE post_id = ${post_id} AND user_id = ${user_id}`;
   await client.query(queryString);
 };
 
@@ -249,6 +265,7 @@ const addHashtag = async (hashtag) => {
 
 const updateHashtag = async (hashtag) => {
   const queryString = `UPDATE hashtags SET count = count + 1 WHERE name = '${hashtag}'`;
+  await client.query(queryString);
 };
 
 module.exports = {
@@ -282,4 +299,7 @@ module.exports = {
   addHashtag,
   updateHashtag,
   getRecommendActual,
+  getPostLikes,
+  likePost,
+  unlikePost,
 };

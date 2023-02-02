@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BsReply } from 'react-icons/bs';
 import { FiShare } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const PostItem = ({
   avatarUrl,
@@ -17,10 +18,36 @@ const PostItem = ({
   attachment,
   user_id,
   isLast,
+  post_id,
 }) => {
   const [isLike, setIsLike] = useState(false);
+  const [usersLikes, setUsersLikes] = useState([]);
+  const [likesCount, setLikesCount] = useState(likes);
   const { id } = useSelector((state) => state.user.userData);
   const user_link = user_id === id ? '/app/profile' : `/app/users/${user_id}`;
+
+  useEffect(() => {
+    axios.get(`/posts/likes/${post_id}`).then((res) => {
+      setUsersLikes(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    usersLikes.forEach((user) => {
+      if (user.user_id === id) {
+        setIsLike(true);
+      }
+    });
+    setLikesCount(usersLikes.length);
+  }, [usersLikes]);
+
+  const handleLikeClick = async (post_id, id) => {
+    if (isLike) {
+      await axios.post(`/posts/unlike`, { post_id, user_id: id });
+    } else {
+      await axios.post(`/posts/like`, { post_id, user_id: id });
+    }
+  };
 
   const makeSentence = (number, words) => {
     number = Math.abs(number) % 100;
@@ -87,10 +114,19 @@ const PostItem = ({
               className={`last-messages__box-statistic ${
                 isLike ? 'active-icon' : ''
               }`}
-              onClick={() => setIsLike(!isLike)}
+              onClick={() => {
+                handleLikeClick(post_id, id);
+                if (isLike) {
+                  setIsLike(false);
+                  setLikesCount(likesCount - 1);
+                } else {
+                  setIsLike(true);
+                  setLikesCount(likesCount + 1);
+                }
+              }}
             >
               <AiOutlineHeart />
-              <p className="last-messages__box-statistic-title">{likes}</p>
+              <p className="last-messages__box-statistic-title">{likesCount}</p>
             </div>
             <div className="last-messages__box-statistic">
               <BsReply />

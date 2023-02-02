@@ -35,6 +35,9 @@ const {
   addHashtag,
   updateHashtag,
   getRecommendActual,
+  getPostLikes,
+  likePost,
+  unlikePost,
 } = require('./api/db.js');
 const { checkToken } = require('./middlewares/checkToken.js');
 const { checkLogin } = require('./middlewares/checkLogin.js');
@@ -128,6 +131,22 @@ app.get('/posts/:id', jsonParser, async (req, res) => {
   const { id } = req.params;
   const data = await getPostsById(Number(id));
   res.json(data);
+});
+
+app.get('/posts/likes/:id', async (req, res) => {
+  const { id } = req.params;
+  const data = await getPostLikes(id);
+  res.json(data);
+});
+
+app.post('/posts/like', jsonParser, async (req, res) => {
+  const { post_id, user_id } = req.body;
+  return await likePost(post_id, user_id);
+});
+
+app.post('/posts/unlike', jsonParser, async (req, res) => {
+  const { post_id, user_id } = req.body;
+  return await unlikePost(post_id, user_id);
 });
 
 app.post('/follow', jsonParser, async (req, res) => {
