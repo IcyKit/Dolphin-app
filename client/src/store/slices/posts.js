@@ -64,8 +64,10 @@ export const postsSlice = createSlice({
     builder.addCase(fetchCreatePost.rejected, (state, action) => {
       state.isEditorLoading = false;
     });
+    builder.addCase(fetchPostsById.pending, (state, action) => {});
     builder.addCase(fetchPostsById.fulfilled, (state, action) => {
       state.filteredPosts = action.payload;
+      state.isPostsLoading = false;
     });
   },
 });

@@ -37,7 +37,7 @@ export const recommendsSlice = createSlice({
       state.bloggers = action.payload;
     });
     builder.addCase(fetchActual.pending, (state, action) => {
-      state.isActualLoading = false;
+      state.isActualLoading = true;
     });
     builder.addCase(fetchActual.fulfilled, (state, action) => {
       state.isActualLoading = false;

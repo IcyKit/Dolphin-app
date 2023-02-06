@@ -21,7 +21,7 @@ const CreatePostParent = () => {
 
   const createPost = async () => {
     dispatch(fetchCreatePost({ text, img }));
-    // dispatch(incPosts());
+    dispatch(incPosts());
   };
 
   return (

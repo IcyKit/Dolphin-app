@@ -1,10 +1,13 @@
-.new-post {
+.new-post form {
   display: none;
 }
 
 @media screen and (min-width: 992px) {
-  .new-post {
+  .new-post form {
     display: block;
+  }
+
+  .new-post {
     margin-bottom: 15px;
   }
 

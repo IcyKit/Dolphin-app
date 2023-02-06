@@ -6,16 +6,18 @@ import ProfileCard from '../../components/ProfileCard';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PostsByID from '../../components/PostsByID';
-import { CircularProgress } from '@mui/material';
+import AppLoading from '../../components/Skeletons/AppLoading';
+import ProfileCardSkeleton from '../../components/Skeletons/ProfileCardSkeleton';
 
 const Profile = () => {
   const { pathname } = useLocation();
   const params = useParams().id;
   const { id } = useSelector((state) => state.user.userData);
   const { isUserLoading } = useSelector((state) => state.user);
+  const { isPostsLoading } = useSelector((state) => state.posts);
 
-  if (isUserLoading) {
-    return <CircularProgress />;
+  if (isUserLoading || isPostsLoading) {
+    return <AppLoading />;
   }
 
   return (
@@ -23,6 +25,7 @@ const Profile = () => {
       <div className="container">
         <div className="main__box">
           <section className="last-messages">
+            {/* <ProfileCardSkeleton /> */}
             <ProfileCard />
             {pathname === '/app/profile' && <CreatePost />}
             {pathname === '/app/profile' ? (

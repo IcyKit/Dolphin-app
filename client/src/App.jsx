@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchUser } from './store/slices/user';
 import { fetchPosts } from './store/slices/posts';
+import { fetchBloggers, fetchActual } from './store/slices/recommends';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchUser());
+    dispatch(fetchActual());
+    dispatch(fetchBloggers());
   }, []);
 
   useEffect(() => {
@@ -25,6 +29,7 @@ function App() {
     <div className="App">
       <Header />
       <Outlet />
+      <Footer />
     </div>
   );
 }
