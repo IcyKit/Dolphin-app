@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import BloggersItem from '../BloggersItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBloggers } from '../../store/slices/recommends';
+import FollowButton from '../FollowButton';
 
 const Bloggers = () => {
   const dispatch = useDispatch();
@@ -23,12 +24,14 @@ const Bloggers = () => {
       <h3>Рекомендации для вас</h3>
       <div className="bloggers__content">
         {bloggers.map((item) => (
-          <BloggersItem
-            name={item.name}
-            nickname={item.nickname}
-            avatarUrl={item.avatarphoto}
-            user_id={item.id}
-          />
+          <>
+            <BloggersItem
+              name={item.name}
+              nickname={item.nickname}
+              avatarUrl={item.avatarphoto}
+              user_id={item.id}
+            />
+          </>
         ))}
       </div>
     </div>

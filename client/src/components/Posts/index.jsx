@@ -1,8 +1,22 @@
 import PostItem from '../PostItem';
 import { useSelector } from 'react-redux';
+import PostSkeleton from '../Skeletons/PostSkeleton';
 
 const Posts = () => {
   let posts = useSelector((state) => state.posts.posts);
+  const { isUserLoading } = useSelector((state) => state.user);
+  const { isPostsLoading } = useSelector((state) => state.posts);
+  let skeletonArr = new Array(6).fill('');
+
+  if (isUserLoading || isPostsLoading) {
+    return (
+      <div className="last-messages__content card-shadow">
+        {skeletonArr.map((_) => (
+          <PostSkeleton />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="last-messages__content card-shadow">

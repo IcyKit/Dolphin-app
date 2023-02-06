@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import FollowButton from '../FollowButton';
 
 const BloggersItem = ({ name, nickname, avatarUrl, user_id }) => {
   const { id } = useSelector((state) => state.user.userData);
@@ -14,7 +15,7 @@ const BloggersItem = ({ name, nickname, avatarUrl, user_id }) => {
           </div>
         </div>
       </Link>
-      <div className="btn">Читать</div>
+      <FollowButton user_id={user_id} />
     </div>
   );
 };

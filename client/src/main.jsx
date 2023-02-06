@@ -5,6 +5,7 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Followers from './pages/Followers';
+import AppLoading from './components/Skeletons/AppLoading';
 
 const App = React.lazy(() => import('./App'));
 const Feed = React.lazy(() => import('./pages/Feed'));
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense fallback={<AppLoading />}>
       <RouterProvider router={router} />
     </Suspense>
   </Provider>

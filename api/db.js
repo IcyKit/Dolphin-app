@@ -15,7 +15,7 @@ const client = makeNewClient();
 
 const getPosts = async () => {
   const res = await client.query(
-    `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC`
+    `SELECT post_id, user_id, name, nickname, content, attachment, replies, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id ORDER BY postdate DESC`
   );
   return res.rows;
 };
@@ -23,9 +23,9 @@ const getPosts = async () => {
 const getPostsByFollowed = async (following_id, id) => {
   let queryString;
   if (!following_id) {
-    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id = ${id} ORDER BY postdate DESC`;
+    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id = ${id} ORDER BY postdate DESC`;
   } else {
-    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`;
+    queryString = `SELECT post_id, user_id, name, nickname, content, attachment, replies, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE user_id IN (${following_id}) OR user_id = ${id} ORDER BY postdate DESC`;
   }
   const res = await client.query(queryString);
   return res.rows;
@@ -33,7 +33,7 @@ const getPostsByFollowed = async (following_id, id) => {
 
 const getPostsById = async (id) => {
   const res = await client.query(
-    `SELECT post_id, user_id, name, nickname, content, attachment, replies, likes, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE id = ${id} ORDER BY postdate DESC`
+    `SELECT post_id, user_id, name, nickname, content, attachment, replies, reposts, avatarphoto, postdate FROM users INNER JOIN posts ON id = user_id WHERE id = ${id} ORDER BY postdate DESC`
   );
   if (!res.rows) {
     return [];

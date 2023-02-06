@@ -173,7 +173,7 @@ app.post('/posts', jsonParser, async (req, res) => {
   const hastags = content
     .split(' ')
     .filter((word) => word.startsWith('#'))
-    .map((word) => word.slice(1).replace(',', ''));
+    .map((word) => word.toLowerCase().slice(1).replace(',', ''));
   hastags.forEach(async (word) => {
     const hashtagResult = await checkHashtag(word);
     if (!hashtagResult) {

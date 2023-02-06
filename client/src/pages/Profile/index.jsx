@@ -6,7 +6,8 @@ import ProfileCard from '../../components/ProfileCard';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PostsByID from '../../components/PostsByID';
-import { CircularProgress } from '@mui/material';
+import AppLoading from '../../components/Skeletons/AppLoading';
+import ProfileCardSkeleton from '../../components/Skeletons/ProfileCardSkeleton';
 
 const Profile = () => {
   const { pathname } = useLocation();
@@ -15,7 +16,7 @@ const Profile = () => {
   const { isUserLoading } = useSelector((state) => state.user);
 
   if (isUserLoading) {
-    return <CircularProgress />;
+    return <AppLoading />;
   }
 
   return (

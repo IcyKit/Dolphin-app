@@ -12,13 +12,18 @@ const CreatePost = () => {
       {isOpen ? (
         <CreatePostParent />
       ) : (
-        <form onClick={() => setIsOpen(true)}>
-          <input
-            type="text"
-            className="new-post-input card-shadow"
-            placeholder={`Что нового, ${name}?`}
-          />
-        </form>
+        <>
+          <form onClick={() => setIsOpen(true)}>
+            <input
+              type="text"
+              className="new-post-input card-shadow"
+              placeholder={`Что нового, ${name}?`}
+            />
+          </form>
+          <button className="new-message" onClick={() => setIsOpen(true)}>
+            <img src="/write.png" />
+          </button>
+        </>
       )}
     </section>
   );

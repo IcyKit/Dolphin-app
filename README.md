@@ -1,5 +1,7 @@
 # Dolphin Project
 
+#### In the near future, the project will be moved to improved design patterns, in addition, the Backend will be redesigned
+
 This is my personal project. Dolphin is a modern social network that gives complete freedom of speech
 
 ## Website

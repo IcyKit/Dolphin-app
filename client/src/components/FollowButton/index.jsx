@@ -7,12 +7,14 @@ const FollowButton = ({ user_id }) => {
   const { following, id } = useSelector((state) => state.user.userData);
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
-    following.forEach((item) => {
-      if (item.id === Number(user_id)) {
-        setIsFollowing(true);
-      }
-    });
-  }, []);
+    if (following) {
+      following.forEach((item) => {
+        if (item.id === Number(user_id)) {
+          setIsFollowing(true);
+        }
+      });
+    }
+  }, [following]);
 
   const handleButtonClick = () => {
     const obj = { id, user_id: Number(user_id) };
