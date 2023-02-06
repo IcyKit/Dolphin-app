@@ -2,9 +2,6 @@ import Skeleton from '@mui/material/Skeleton';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { GoLocation } from 'react-icons/go';
-import { AiOutlineLink } from 'react-icons/ai';
-import { BiCake } from 'react-icons/bi';
 
 const ProfileCardSkeleton = () => {
   return (

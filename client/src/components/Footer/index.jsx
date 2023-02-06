@@ -7,9 +7,9 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-box active">
-        <a href="/">
+        <Link to="/app">
           <img className="footer-icon" src="/home.png" alt="" />
-        </a>
+        </Link>
       </div>
       <div className="footer-box">
         <a href="/">

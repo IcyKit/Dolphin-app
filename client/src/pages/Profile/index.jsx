@@ -14,8 +14,9 @@ const Profile = () => {
   const params = useParams().id;
   const { id } = useSelector((state) => state.user.userData);
   const { isUserLoading } = useSelector((state) => state.user);
+  const { isPostsLoading } = useSelector((state) => state.posts);
 
-  if (isUserLoading) {
+  if (isUserLoading || isPostsLoading) {
     return <AppLoading />;
   }
 
@@ -24,6 +25,7 @@ const Profile = () => {
       <div className="container">
         <div className="main__box">
           <section className="last-messages">
+            {/* <ProfileCardSkeleton /> */}
             <ProfileCard />
             {pathname === '/app/profile' && <CreatePost />}
             {pathname === '/app/profile' ? (

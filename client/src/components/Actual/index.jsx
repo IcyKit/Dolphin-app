@@ -6,9 +6,9 @@ import { fetchActual } from '../../store/slices/recommends';
 
 const Actual = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchActual());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchActual());
+  // }, []);
 
   const { actual, isActualLoading } = useSelector((state) => state.recommends);
 

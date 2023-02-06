@@ -11,9 +11,9 @@ const Bloggers = () => {
     (state) => state.recommends
   );
 
-  useEffect(() => {
-    dispatch(fetchBloggers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchBloggers());
+  // }, []);
 
   if (isBloggersLoading) {
     return <h3>Загрузка...</h3>;
